@@ -1,4 +1,4 @@
-import config from './jest.config'
+import config from './jest.config.js'
 
 config.testMatch = ['**/*.spec.js']
 

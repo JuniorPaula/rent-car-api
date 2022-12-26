@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "seed": "node ./seed",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests --no-cache --config ./jest.config.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests",
     "test:unit": "npm test -- -c jest-unit-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
