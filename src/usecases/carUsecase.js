@@ -10,6 +10,13 @@ export class CarUsecase {
     return Math.floor(Math.random() * listLength)
   }
 
+  choosenRandomCar(carCategory) {
+    const randomCarIndex = this.getRandomPositionFromArray(carCategory.carIds)
+    const carId = carCategory.carIds[randomCarIndex]
+
+    return carId
+  }
+
   async getAvailableCar() {
     return null
   }

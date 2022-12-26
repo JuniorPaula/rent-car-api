@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach } from '@jest/globals'
+import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { CarUsecase } from './carUsecase.js'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
@@ -6,11 +6,12 @@ import { fileURLToPath } from 'url'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const carsDatabase = join(__dirname, './../../database', 'cars.json')
 
-// const mocks = {
-//   validCarCategory: import('../../mocks/valid-carCategory.json'),
-//   validCar: import('../../mocks/valid-car.json'),
-//   validCustomer: import('../../mocks/valid-customer.json'),
-// }
+const mocks = {
+  validCarCategory: (await import('../../mocks/valid-carCategory.json'))
+    .default,
+  validCar: (await import('../../mocks/valid-car.json')).default,
+  validCustomer: (await import('../../mocks/valid-customer.json')).default,
+}
 
 describe('CarUsecase suite test', () => {
   let carUsecase = {}
@@ -24,6 +25,21 @@ describe('CarUsecase suite test', () => {
 
     expect(result).toBeLessThan(data.length)
     expect(result).toBeGreaterThanOrEqual(0)
+  })
+
+  test('should choosen the first id from carIds in carCategory', () => {
+    const carCategory = mocks.validCarCategory
+    const carIdIndex = 0
+
+    jest
+      .spyOn(carUsecase, carUsecase.getRandomPositionFromArray.name)
+      .mockReturnValueOnce(carIdIndex)
+
+    const result = carUsecase.choosenRandomCar(carCategory)
+    const expected = carCategory.carIds[carIdIndex]
+
+    expect(carUsecase.getRandomPositionFromArray).toHaveBeenCalledTimes(1)
+    expect(result).toEqual(expected)
   })
 
   // test('give a carCategory it should return an available car', async () => {
