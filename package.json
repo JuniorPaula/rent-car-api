@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "seed": "node ./seed",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests --no-cache --config ./jest.config.js",
     "test:unit": "npm test -- -c jest-unit-config.js",
     "test:staged": "npm test -- --findRelatedTests",
@@ -18,6 +19,7 @@
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "faker": "^5.5.3",
     "husky": "^8.0.2",
     "jest": "^29.3.1",
     "lint-staged": "^13.1.0",
