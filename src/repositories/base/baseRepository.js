@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises'
 
-export class BaseRepositoryProtocol {
+export class BaseRepository {
   constructor({ file }) {
     this.file = file
   }
