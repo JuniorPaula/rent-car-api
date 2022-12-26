@@ -17,7 +17,10 @@ export class CarUsecase {
     return carId
   }
 
-  async getAvailableCar() {
-    return null
+  async getAvailableCar(carCategory) {
+    const carId = this.choosenRandomCar(carCategory)
+    const car = await this.carRepository.find(carId)
+
+    return car
   }
 }

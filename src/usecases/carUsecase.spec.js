@@ -42,13 +42,21 @@ describe('CarUsecase suite test', () => {
     expect(result).toEqual(expected)
   })
 
-  // test('give a carCategory it should return an available car', async () => {
-  //   const car = mocks.validCar
-  //   const carCategory = Object.create(mocks.validCarCategory)
-  //   carCategory.ids = [car.id]
+  test('give a carCategory it should return an available car', async () => {
+    const car = mocks.validCar
+    const carCategory = Object.create(mocks.validCarCategory)
+    carCategory.carIds = [car.id]
 
-  //   const result = await carUsecase.getAvailableCar(carCategory)
+    jest
+      .spyOn(carUsecase.carRepository, carUsecase.carRepository.find.name)
+      .mockReturnValueOnce(car)
 
-  //   expect(result).toEqual(car)
-  // })
+    jest.spyOn(carUsecase, carUsecase.choosenRandomCar.name)
+
+    const result = await carUsecase.getAvailableCar(carCategory)
+
+    expect(carUsecase.choosenRandomCar).toHaveBeenCalledTimes(1)
+    expect(carUsecase.carRepository.find).toHaveBeenCalledWith(car.id)
+    expect(result).toEqual(car)
+  })
 })
