@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests --no-cache --config ./jest.config.js",
+    "test:unit": "npm test -- -c jest-unit-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "prepare": "husky install"
