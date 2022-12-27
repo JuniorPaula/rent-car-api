@@ -1,6 +1,7 @@
 import { BaseRepository } from '../repositories/base/baseRepository.js'
 import { Tax } from '../entities/tax.js'
 import { NumberFormat } from '../utils/numberFormat.js'
+import { Transaction } from '../entities/transaction.js'
 
 export class CarUsecase {
   constructor({ cars }) {
@@ -40,5 +41,28 @@ export class CarUsecase {
     ).format(finalPrice)
 
     return formattedPrice
+  }
+
+  async rent(customer, carCategory, numberOfDays) {
+    const car = await this.getAvailableCar(carCategory)
+    const finalPrice = this.calculateFinalPrice(
+      customer,
+      carCategory,
+      numberOfDays,
+    )
+
+    const today = new Date()
+    today.setDate(today.getDate() + numberOfDays)
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }
+    const dueDate = today.toLocaleDateString('pt-br', options)
+
+    const transaction = new Transaction({
+      customer,
+      dueDate,
+      car,
+      amount: finalPrice,
+    })
+
+    return transaction
   }
 }

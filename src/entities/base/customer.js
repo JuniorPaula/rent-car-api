@@ -1,4 +1,4 @@
-import { BaseProtocol } from './base/base.js'
+import { BaseProtocol } from './base.js'
 
 export class Customer extends BaseProtocol {
   constructor({ id, name, age }) {

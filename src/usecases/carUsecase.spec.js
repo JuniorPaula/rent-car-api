@@ -1,6 +1,7 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { CarUsecase } from './carUsecase.js'
 import { NumberFormat } from '../utils/numberFormat.js'
+import { Transaction } from '../entities/transaction.js'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -79,6 +80,44 @@ describe('CarUsecase suite test', () => {
       carCategory,
       numberOfDays,
     )
+
+    expect(result).toEqual(expected)
+  })
+
+  test('given a customer and a car category it should return a transaction receipt', async () => {
+    const car = mocks.validCar
+    const carCategory = {
+      ...mocks.validCarCategory,
+      price: 37.6,
+      carIds: [car.id],
+    }
+
+    const customer = Object.create(mocks.validCustomer)
+    customer.age = 20
+
+    const numberOfDays = 5
+    const dueDate = '1 de janeiro de 2023'
+
+    const now = new Date(2022, 11, 27)
+    jest.spyOn(now, 'getTime').mockReturnValueOnce(now)
+
+    jest
+      .spyOn(carUsecase.carRepository, carUsecase.carRepository.find.name)
+      .mockReturnValueOnce(car)
+
+    const expectedAmount = NumberFormat.getCurrencyFormat(
+      'pt-br',
+      'BRL',
+    ).format(206.8)
+
+    const result = await carUsecase.rent(customer, carCategory, numberOfDays)
+
+    const expected = new Transaction({
+      customer,
+      car,
+      dueDate,
+      amount: expectedAmount,
+    })
 
     expect(result).toEqual(expected)
   })
