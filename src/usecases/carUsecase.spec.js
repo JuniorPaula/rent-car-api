@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { CarUsecase } from './carUsecase.js'
+import { NumberFormat } from '../utils/numberFormat.js'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -58,5 +59,27 @@ describe('CarUsecase suite test', () => {
     expect(carUsecase.choosenRandomCar).toHaveBeenCalledTimes(1)
     expect(carUsecase.carRepository.find).toHaveBeenCalledWith(car.id)
     expect(result).toEqual(car)
+  })
+
+  test('given a carCategory, customer and numberOfDays it should calculate final amount in real', async () => {
+    const customer = Object.create(mocks.validCustomer)
+    customer.age = 50
+
+    const carCategory = Object.create(mocks.validCarCategory)
+    carCategory.price = 37.6
+
+    const numberOfDays = 5
+
+    const expected = NumberFormat.getCurrencyFormat('pt-br', 'BRL').format(
+      244.4,
+    )
+
+    const result = carUsecase.calculateFinalPrice(
+      customer,
+      carCategory,
+      numberOfDays,
+    )
+
+    expect(result).toEqual(expected)
   })
 })
