@@ -96,7 +96,10 @@ describe('CarUsecase suite test', () => {
     customer.age = 20
 
     const numberOfDays = 5
-    const dueDate = '1 de janeiro de 2023'
+    const today = new Date()
+    today.setDate(today.getDate() + numberOfDays)
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }
+    const dueDate = today.toLocaleDateString('pt-br', options)
 
     const now = new Date(2022, 11, 27)
     jest.spyOn(now, 'getTime').mockReturnValueOnce(now)
