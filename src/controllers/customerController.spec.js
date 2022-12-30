@@ -7,6 +7,7 @@ describe('Customer controller', () => {
   beforeEach(() => {
     sut = new CustomerController()
   })
+
   test('should return 400 if no name is provided', async () => {
     const httpRequest = {
       body: {
@@ -17,5 +18,17 @@ describe('Customer controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error).toBe('missing param: name')
+  })
+
+  test('should return 400 if no age is provided', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Jhon Doe',
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.error).toBe('missing param: age')
   })
 })
