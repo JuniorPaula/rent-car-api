@@ -17,7 +17,7 @@ describe('Customer controller', () => {
 
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.error).toBe('missing param: name')
+    expect(httpResponse.error.message).toBe('missing param: name')
   })
 
   test('should return 400 if no age is provided', async () => {
@@ -29,6 +29,6 @@ describe('Customer controller', () => {
 
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.error).toBe('missing param: age')
+    expect(httpResponse.error.message).toBe('missing param: age')
   })
 })

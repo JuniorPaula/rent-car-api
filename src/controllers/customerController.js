@@ -1,17 +1,13 @@
+import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
+
 export class CustomerController {
   async handle(httpRequest) {
     const { name, age } = httpRequest.body
     if (!name) {
-      return {
-        statusCode: 400,
-        error: `missing param: name`,
-      }
+      return HttpResponseStatus.badRequest('name')
     }
     if (!age) {
-      return {
-        statusCode: 400,
-        error: `missing param: age`,
-      }
+      return HttpResponseStatus.badRequest('age')
     }
   }
 }
