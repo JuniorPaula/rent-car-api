@@ -75,4 +75,27 @@ describe('Customer controller', () => {
     })
     expect(customerEntitySpy).toHaveBeenCalledTimes(1)
   })
+
+  test('should return 500 if CustomerEntity to throws', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Jhon Doe',
+        age: 25,
+      },
+    }
+
+    class CustomerEntityStub {
+      async saveCustomer() {
+        throw new Error()
+      }
+    }
+
+    const customerEntityStub = new CustomerEntityStub()
+    const sut = new CustomerController(customerEntityStub)
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
