@@ -3,9 +3,10 @@ import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
 export class CustomerController {
   async handle(httpRequest) {
     try {
-      if (!httpRequest) {
+      if (!httpRequest || !httpRequest.body) {
         return HttpResponseStatus.serverError()
       }
+
       const fields = ['name', 'age']
       for (const field of fields) {
         if (!httpRequest.body[field]) {
@@ -13,10 +14,7 @@ export class CustomerController {
         }
       }
     } catch (err) {
-      return {
-        statusCode: 500,
-        error: 'Internal server error',
-      }
+      return HttpResponseStatus.serverError()
     }
   }
 }
