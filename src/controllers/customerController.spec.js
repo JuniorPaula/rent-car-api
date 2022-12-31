@@ -31,4 +31,10 @@ describe('Customer controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: age')
   })
+
+  test('should return 500 if no httpRequest is provided', async () => {
+    const httpResponse = await sut.handle()
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
