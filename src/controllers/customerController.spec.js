@@ -98,4 +98,17 @@ describe('Customer controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
   })
+
+  test('should return 201 if succeeds', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Jhon Doe',
+        age: 25,
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(201)
+    expect(httpResponse.body).toBe('no content')
+  })
 })
