@@ -1,11 +1,23 @@
-import { describe, test, beforeEach, expect } from '@jest/globals'
+import { describe, test, beforeEach, expect, jest } from '@jest/globals'
 import { CustomerController } from './customerController.js'
 
+const mockCustomerEntity = () => {
+  class CustomerEntityStub {
+    async saveCustomer({ name, age }) {
+      this.name = name
+      this.age = age
+    }
+  }
+
+  return new CustomerEntityStub()
+}
+
 describe('Customer controller', () => {
+  let customerEntityStub = mockCustomerEntity()
   let sut = {}
 
   beforeEach(() => {
-    sut = new CustomerController()
+    sut = new CustomerController(customerEntityStub)
   })
 
   test('should return 400 if no name is provided', async () => {
@@ -43,5 +55,24 @@ describe('Customer controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('should call CustomerEntity with correct values', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Jhon Doe',
+        age: 25,
+      },
+    }
+    const customerEntitySpy = jest.spyOn(
+      customerEntityStub,
+      customerEntityStub.saveCustomer.name,
+    )
+    await sut.handle(httpRequest)
+    expect(customerEntitySpy).toHaveBeenCalledWith({
+      name: 'Jhon Doe',
+      age: 25,
+    })
+    expect(customerEntitySpy).toHaveBeenCalledTimes(1)
   })
 })

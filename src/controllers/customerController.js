@@ -1,6 +1,10 @@
 import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
 
 export class CustomerController {
+  constructor(customerEntity) {
+    this.customerEntity = customerEntity
+  }
+
   async handle(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) {
@@ -13,6 +17,10 @@ export class CustomerController {
           return HttpResponseStatus.badRequest(field)
         }
       }
+
+      const { name, age } = httpRequest.body
+
+      await this.customerEntity.saveCustomer({ name, age })
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
