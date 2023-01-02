@@ -32,6 +32,11 @@ describe('Customer Entity', () => {
     expect(cusomterSpy).toHaveBeenCalledWith({ name: 'Jhon', age: 35 })
   })
 
+  test('Should throws if no params are provided', async () => {
+    const spy = sut.saveCustomer({})
+    await expect(spy).rejects.toThrow('missing param: name/age')
+  })
+
   test('Should throws if customer repository to throws', async () => {
     jest
       .spyOn(customerRepository, customerRepository.create.name)
