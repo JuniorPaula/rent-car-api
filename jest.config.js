@@ -17,4 +17,5 @@ export default {
   testEnvironment: 'jest-environment-node',
   watchPathIgnorePatterns: ['node_modules'],
   transformIgnorePatterns: ['node_modules'],
+  preset: '@shelf/jest-mongodb',
 }
