@@ -7,22 +7,7 @@ import {
   afterAll,
 } from '@jest/globals'
 import { MongoDBProvider } from '../providers/mongodbProvider'
-import { MissingParamError } from '../validations/errors/index.js'
-
-class CustomerRepository {
-  async create({ name, age }) {
-    if (!name) {
-      throw new MissingParamError('name')
-    }
-    if (!age) {
-      throw new MissingParamError('age')
-    }
-
-    const customerModel = await MongoDBProvider.getCollection('customers')
-    const res = await customerModel.insertOne({ name, age })
-    return res
-  }
-}
+import { CustomerRepository } from './customerRepository.js'
 
 describe('Customer Repository', () => {
   let customerModel
