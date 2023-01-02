@@ -13,10 +13,11 @@ const mockCustomerRepository = () => {
 }
 
 describe('Customer Entity', () => {
-  let customerRepository = mockCustomerRepository()
+  let customerRepository
   let sut = {}
 
   beforeEach(() => {
+    customerRepository = mockCustomerRepository()
     sut = new CustomerEntity(customerRepository)
   })
 
@@ -29,5 +30,15 @@ describe('Customer Entity', () => {
     await sut.saveCustomer({ name: 'Jhon', age: 35 })
 
     expect(cusomterSpy).toHaveBeenCalledWith({ name: 'Jhon', age: 35 })
+  })
+
+  test('Should throws if customer repository to throws', async () => {
+    jest
+      .spyOn(customerRepository, customerRepository.create.name)
+      .mockImplementationOnce(() => Promise.reject(new Error()))
+
+    const promise = sut.saveCustomer({ name: 'Jhon', age: 35 })
+
+    await expect(promise).rejects.toThrow()
   })
 })
