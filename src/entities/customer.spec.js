@@ -17,6 +17,7 @@ describe('Customer Entity', () => {
   let sut = {}
 
   beforeEach(() => {
+    jest.clearAllMocks()
     customerRepository = mockCustomerRepository()
     sut = new CustomerEntity(customerRepository)
   })
@@ -35,6 +36,16 @@ describe('Customer Entity', () => {
   test('Should throws if no params are provided', async () => {
     const spy = sut.saveCustomer({})
     await expect(spy).rejects.toThrow('missing param: name/age')
+  })
+
+  test('Should throws if no repository on constructor are provided', async () => {
+    // class CustomerRepositoryStub {}
+    // const fakeRepository = new CustomerRepositoryStub()
+
+    const sut = new CustomerEntity()
+    const spy = sut.saveCustomer({ name: 'Jhon', age: 35 })
+
+    await expect(spy).rejects.toThrow('missing param: customerRepository')
   })
 
   test('Should throws if customer repository to throws', async () => {

@@ -9,6 +9,10 @@ export class CustomerEntity {
     if (!name || !age) {
       throw new MissingParamError('name/age')
     }
+
+    if (!this.customerRepository) {
+      throw new MissingParamError('customerRepository')
+    }
     await this.customerRepository.create({ name, age })
   }
 }
