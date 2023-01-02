@@ -17,6 +17,10 @@ class CustomerRepository {
     if (!age) {
       throw new MissingParamError('age')
     }
+
+    const customerModel = await MongoDBProvider.getCollection('customers')
+    const res = await customerModel.insertOne({ name, age })
+    return res
   }
 }
 
@@ -43,5 +47,14 @@ describe('Customer Repository', () => {
     await expect(sut.create({ name: 'Jhon' })).rejects.toThrow(
       'missing param: age',
     )
+  })
+
+  test('Should save a customer on success', async () => {
+    const res = await sut.create({ name: 'Jhon Doe', age: 35 })
+
+    const customer = await customerModel.findOne({ _id: res.insertedId })
+
+    expect(customer.name).toBe('Jhon Doe')
+    expect(customer.age).toBe(35)
   })
 })
