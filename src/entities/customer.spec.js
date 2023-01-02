@@ -1,18 +1,26 @@
-import { describe, test, expect, jest } from '@jest/globals'
+import { describe, test, expect, jest, beforeEach } from '@jest/globals'
 import { CustomerEntity } from './customer.js'
 
-describe('Customer Entity', () => {
-  test('Should call customer repository with correct values', async () => {
-    class CustomerRepository {
-      async create({ name, age }) {
-        this.name = name
-        this.age = age
-      }
+const mockCustomerRepository = () => {
+  class CustomerRepositoryStub {
+    async create({ name, age }) {
+      this.name = name
+      this.age = age
     }
+  }
 
-    const customerRepository = new CustomerRepository()
-    const sut = new CustomerEntity(customerRepository)
+  return new CustomerRepositoryStub()
+}
 
+describe('Customer Entity', () => {
+  let customerRepository = mockCustomerRepository()
+  let sut = {}
+
+  beforeEach(() => {
+    sut = new CustomerEntity(customerRepository)
+  })
+
+  test('Should call customer repository with correct values', async () => {
     const cusomterSpy = jest.spyOn(
       customerRepository,
       customerRepository.create.name,
