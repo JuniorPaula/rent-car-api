@@ -13,10 +13,11 @@ const mockCarCategoryRepositoryStub = () => {
 }
 
 describe('CarCategory Entity', () => {
-  let carCategoryRepositoryStub = mockCarCategoryRepositoryStub()
+  let carCategoryRepositoryStub
   let sut = {}
 
   beforeEach(() => {
+    carCategoryRepositoryStub = mockCarCategoryRepositoryStub()
     sut = new CarCategoryEntity(carCategoryRepositoryStub)
   })
 
@@ -54,5 +55,18 @@ describe('CarCategory Entity', () => {
     const spy = sut.create({ categoryName: 'Crew Cab Pickup', price: '150.90' })
 
     await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
+  })
+
+  test('Should throws if CarCategoryRepository to throws', async () => {
+    jest
+      .spyOn(carCategoryRepositoryStub, carCategoryRepositoryStub.save.name)
+      .mockImplementationOnce(() => Promise.reject(new Error()))
+
+    const promise = sut.create({
+      categoryName: 'Crew Cab Pickup',
+      price: '150.90',
+    })
+
+    await expect(promise).rejects.toThrow()
   })
 })
