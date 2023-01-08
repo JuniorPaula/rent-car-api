@@ -2,7 +2,7 @@ import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
 
 export class CarCategoryController {
   async handle(httpRequest) {
-    if (!httpRequest) {
+    if (!httpRequest || !httpRequest.body) {
       return HttpResponseStatus.serverError()
     }
 
