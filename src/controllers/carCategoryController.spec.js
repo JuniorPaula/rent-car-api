@@ -81,4 +81,25 @@ describe('CarCategory', () => {
     })
     expect(carCategorySpy).toHaveBeenCalledTimes(1)
   })
+
+  test('Should return 500 if CarCategoryEntity throws', async () => {
+    const httpRequest = {
+      body: {
+        categoryName: 'Crew Cab Pickup',
+        price: '150.90',
+      },
+    }
+    class CarCategoryEntityStub {
+      async create() {
+        throw new Error()
+      }
+    }
+    const carCategoryEntity = new CarCategoryEntityStub()
+    const sut = new CarCategoryController(carCategoryEntity)
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
