@@ -1,6 +1,10 @@
 import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
 
 export class CarCategoryController {
+  constructor(carCategoryEntity) {
+    this.carCategoryEntity = carCategoryEntity
+  }
+
   async handle(httpRequest) {
     if (!httpRequest || !httpRequest.body) {
       return HttpResponseStatus.serverError()
@@ -12,5 +16,8 @@ export class CarCategoryController {
         return HttpResponseStatus.badRequest(field)
       }
     }
+
+    const { categoryName, price } = httpRequest.body
+    await this.carCategoryEntity.create({ categoryName, price })
   }
 }
