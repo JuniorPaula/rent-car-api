@@ -1,4 +1,5 @@
 import { describe, test, beforeEach, expect, jest } from '@jest/globals'
+import { CarCategoryEntity } from './carCategory.js'
 
 const mockCarCategoryRepositoryStub = () => {
   class CarCategoryRepositoryStub {
@@ -9,16 +10,6 @@ const mockCarCategoryRepositoryStub = () => {
   }
 
   return new CarCategoryRepositoryStub()
-}
-
-class CarCategoryEntity {
-  constructor(carCategoryRepository) {
-    this.carCategoryRepository = carCategoryRepository
-  }
-
-  async create({ categoryName, price }) {
-    await this.carCategoryRepository.save({ categoryName, price })
-  }
 }
 
 describe('CarCategory Entity', () => {
