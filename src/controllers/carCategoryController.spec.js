@@ -1,11 +1,11 @@
 import { describe, test, beforeEach, expect } from '@jest/globals'
-import { CarCategory } from './carCategory.js'
+import { CarCategoryController } from './carCategoryController.js'
 
 describe('CarCategory', () => {
   let sut = {}
 
   beforeEach(() => {
-    sut = new CarCategory()
+    sut = new CarCategoryController()
   })
 
   test('Should return 400 if no categoryName is provided', async () => {
