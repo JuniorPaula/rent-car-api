@@ -17,6 +17,13 @@ class CarCategoryRepository {
     if (!price) {
       throw new MissingParamError('price')
     }
+
+    const carCategoryModel = await MongoDBProvider.getCollection(
+      'car_categories',
+    )
+
+    const res = await carCategoryModel.insertOne({ categoryName, price })
+    return res
   }
 }
 
@@ -43,5 +50,17 @@ describe('CarCategory Repository', () => {
     await expect(sut.save({ categoryName: 'Crew Cab Pickup' })).rejects.toThrow(
       'missing param: price',
     )
+  })
+
+  test('Should save a car category on success', async () => {
+    const res = await sut.save({
+      categoryName: 'Crew Cab Pickup',
+      price: '150.90',
+    })
+
+    const carCategory = await carCategoryModel.findOne({ _id: res.insertedId })
+
+    expect(carCategory.categoryName).toStrictEqual('Crew Cab Pickup')
+    expect(carCategory.price).toStrictEqual('150.90')
   })
 })
