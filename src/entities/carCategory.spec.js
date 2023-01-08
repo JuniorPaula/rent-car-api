@@ -33,4 +33,9 @@ describe('CarCategory Entity', () => {
       price: '150.90',
     })
   })
+
+  test('Should throw if no param are provided', async () => {
+    const spy = sut.create({})
+    await expect(spy).rejects.toThrow('missing param: categoryName/price')
+  })
 })
