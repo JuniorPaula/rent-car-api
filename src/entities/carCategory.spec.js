@@ -38,4 +38,11 @@ describe('CarCategory Entity', () => {
     const spy = sut.create({})
     await expect(spy).rejects.toThrow('missing param: categoryName/price')
   })
+
+  test('Should throw if no repository are provided on constructor', async () => {
+    const sut = new CarCategoryEntity()
+    const spy = sut.create({ categoryName: 'Crew Cab Pickup', price: '150.90' })
+
+    await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
+  })
 })
