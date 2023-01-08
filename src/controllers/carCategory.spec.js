@@ -1,22 +1,5 @@
 import { describe, test, beforeEach, expect } from '@jest/globals'
-
-class CarCategory {
-  async handle(httpRequest) {
-    if (!httpRequest.body.categoryName) {
-      return {
-        statusCode: 400,
-        error: new Error('missing param: categoryName'),
-      }
-    }
-
-    if (!httpRequest.body.price) {
-      return {
-        statusCode: 400,
-        error: new Error('missing param: price'),
-      }
-    }
-  }
-}
+import { CarCategory } from './carCategory.js'
 
 describe('CarCategory', () => {
   let sut = {}
