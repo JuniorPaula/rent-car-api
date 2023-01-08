@@ -45,4 +45,14 @@ describe('CarCategory Entity', () => {
 
     await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
   })
+
+  test('Should throw if CarCategoryRepository has no method save', async () => {
+    class CarCategoryRepositoryStub {}
+    const fakeRepository = new CarCategoryRepositoryStub()
+
+    const sut = new CarCategoryEntity(fakeRepository)
+    const spy = sut.create({ categoryName: 'Crew Cab Pickup', price: '150.90' })
+
+    await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
+  })
 })

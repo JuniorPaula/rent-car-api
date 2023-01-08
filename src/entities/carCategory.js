@@ -10,7 +10,7 @@ export class CarCategoryEntity {
       throw new MissingParamError('categoryName/price')
     }
 
-    if (!this.carCategoryRepository) {
+    if (!this.carCategoryRepository || !this.carCategoryRepository.save) {
       throw new MissingParamError('carCategoryRepository')
     }
 
