@@ -7,25 +7,7 @@ import {
   expect,
 } from '@jest/globals'
 import { MongoDBProvider } from '../providers/mongodbProvider.js'
-import { MissingParamError } from '../validations/errors/index.js'
-
-class CarCategoryRepository {
-  async save({ categoryName, price }) {
-    if (!categoryName) {
-      throw new MissingParamError('categoryName')
-    }
-    if (!price) {
-      throw new MissingParamError('price')
-    }
-
-    const carCategoryModel = await MongoDBProvider.getCollection(
-      'car_categories',
-    )
-
-    const res = await carCategoryModel.insertOne({ categoryName, price })
-    return res
-  }
-}
+import { CarCategoryRepository } from './carCategoryRepository.js'
 
 describe('CarCategory Repository', () => {
   let carCategoryModel
