@@ -1,6 +1,6 @@
 import { describe, test } from '@jest/globals'
 import request from 'supertest'
-import app from '../app.js'
+import app from '../main/app.js'
 
 describe('JSON Parse Middleware', () => {
   test('Should parse body as json', async () => {

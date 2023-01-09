@@ -2,7 +2,7 @@ import { describe, test, beforeEach, beforeAll, afterAll } from '@jest/globals'
 import { MongoDBProvider } from '../providers/mongodbProvider.js'
 
 import request from 'supertest'
-import app from '../app.js'
+import app from '../main/app.js'
 
 describe('CarCategory Routes', () => {
   let carCategoryModel
