@@ -27,22 +27,26 @@ describe('CarCategory Repository', () => {
     await MongoDBProvider.disconnect()
   })
 
-  test('Should throws if no params are provided', async () => {
-    await expect(sut.save({})).rejects.toThrow('missing param: categoryName')
-    await expect(sut.save({ categoryName: 'Crew Cab Pickup' })).rejects.toThrow(
-      'missing param: price',
-    )
-  })
-
-  test('Should save a car category on success', async () => {
-    const res = await sut.save({
-      categoryName: 'Crew Cab Pickup',
-      price: '150.90',
+  describe('#Save car category', () => {
+    test('Should throws if no params are provided', async () => {
+      await expect(sut.save({})).rejects.toThrow('missing param: categoryName')
+      await expect(
+        sut.save({ categoryName: 'Crew Cab Pickup' }),
+      ).rejects.toThrow('missing param: price')
     })
 
-    const carCategory = await carCategoryModel.findOne({ _id: res.insertedId })
+    test('Should save a car category on success', async () => {
+      const res = await sut.save({
+        categoryName: 'Crew Cab Pickup',
+        price: '150.90',
+      })
 
-    expect(carCategory.categoryName).toStrictEqual('Crew Cab Pickup')
-    expect(carCategory.price).toStrictEqual('150.90')
+      const carCategory = await carCategoryModel.findOne({
+        _id: res.insertedId,
+      })
+
+      expect(carCategory.categoryName).toStrictEqual('Crew Cab Pickup')
+      expect(carCategory.price).toStrictEqual('150.90')
+    })
   })
 })
