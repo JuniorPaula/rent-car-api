@@ -1,10 +1,31 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { LoadCarCategoryController } from './loadCarCategoryController.js'
 
+const carCategoryDB = [
+  {
+    _id: '123-asdf-098',
+    categoryName: 'SUV',
+    price: '110.00',
+  },
+  {
+    _id: '321-asdf-089',
+    categoryName: 'Crew Cab Pickup',
+    price: '150.90',
+  },
+]
+
 const mockCarCategoryEntityStub = () => {
   class CarCategoryEntityStub {
     async getCarCategory({ carCategoryId = null }) {
-      this.carCategoryId = carCategoryId
+      if (!carCategoryId) {
+        return Promise.resolve(carCategoryDB)
+      }
+
+      const carCategories = carCategoryDB.find(
+        (categoryId) => categoryId === carCategoryId,
+      )
+
+      return Promise.resolve(carCategories)
     }
   }
 
@@ -70,5 +91,24 @@ describe('LoadCarCategoryController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('should return all car categories if no param are provided', async () => {
+    const httpRequest = {}
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual([
+      {
+        _id: '123-asdf-098',
+        categoryName: 'SUV',
+        price: '110.00',
+      },
+      {
+        _id: '321-asdf-089',
+        categoryName: 'Crew Cab Pickup',
+        price: '150.90',
+      },
+    ])
   })
 })

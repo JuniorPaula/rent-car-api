@@ -1,6 +1,13 @@
 import { MissingParamError, ServerError } from '../validations/errors/index.js'
 
 export class HttpResponseStatus {
+  static ok(data) {
+    return {
+      statusCode: 200,
+      body: data,
+    }
+  }
+
   static noContent() {
     return {
       statusCode: 201,

@@ -17,7 +17,11 @@ export class LoadCarCategoryController {
         carCategoryId = params.carCategoryId
       }
 
-      await this.carCategoryEntity.getCarCategory({ carCategoryId })
+      const carCategories = await this.carCategoryEntity.getCarCategory({
+        carCategoryId,
+      })
+
+      return HttpResponseStatus.ok(carCategories)
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
