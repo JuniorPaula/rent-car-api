@@ -1,11 +1,25 @@
-import { describe, test, expect, beforeEach } from '@jest/globals'
+import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { UpdateCarCategoryController } from './updateCarCategoryController.js'
 
+const mockCarCategoryEntityStub = () => {
+  class CarCategoryEntityStub {
+    async update({ carCategoryId, categoryName, price }) {
+      this.carCategoryId = carCategoryId
+      this.categoryName = categoryName
+      this.price = price
+    }
+  }
+
+  return new CarCategoryEntityStub()
+}
+
 describe('UpdateCarCategoryController', () => {
+  let carCategoryEntityStub
   let sut = {}
 
   beforeEach(() => {
-    sut = new UpdateCarCategoryController()
+    carCategoryEntityStub = mockCarCategoryEntityStub()
+    sut = new UpdateCarCategoryController(carCategoryEntityStub)
   })
 
   test('Should return 500 if no httpRequest is provided', async () => {
@@ -33,5 +47,29 @@ describe('UpdateCarCategoryController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('Should call CarCategoryEntity with correct param', async () => {
+    const httpRequest = {
+      params: {
+        carCategoryId: '123-asdf-098',
+      },
+      body: {
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      },
+    }
+    const getSpy = jest.spyOn(
+      carCategoryEntityStub,
+      carCategoryEntityStub.update.name,
+    )
+    await sut.handle(httpRequest)
+
+    expect(getSpy).toHaveBeenCalledWith({
+      carCategoryId: '123-asdf-098',
+      categoryName: 'Crew Cab Pickup updated',
+      price: '170.90',
+    })
+    expect(getSpy).toHaveBeenCalledTimes(1)
   })
 })
