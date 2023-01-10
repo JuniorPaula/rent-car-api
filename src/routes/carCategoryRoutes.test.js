@@ -23,7 +23,7 @@ describe('CarCategory Routes', () => {
   describe('POST /create', () => {
     test('Should return 201 when created succeeds', async () => {
       await request(app)
-        .post('/create')
+        .post('/category/create')
         .send({
           categoryName: 'Crew Cab Pickup',
           price: '150.90',
