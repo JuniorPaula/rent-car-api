@@ -160,13 +160,27 @@ describe('CarCategory Entity', () => {
       expect(carCategory).toEqual(carCategoryDB)
     })
 
-    test('Should throw if CarCategoryRepository has no method save', async () => {
+    test('Should throw if CarCategoryRepository has no method findAll', async () => {
       class CarCategoryRepositoryStub {}
       const fakeRepository = new CarCategoryRepositoryStub()
 
       const sut = new CarCategoryEntity(fakeRepository)
       const spy = sut.getCarCategory({
         carCategoryId: null,
+      })
+
+      await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
+    })
+
+    test('Should throw if CarCategoryRepository has no method findById', async () => {
+      class CarCategoryRepositoryStub {
+        async findAll() {}
+      }
+      const fakeRepository = new CarCategoryRepositoryStub()
+
+      const sut = new CarCategoryEntity(fakeRepository)
+      const spy = sut.getCarCategory({
+        carCategoryId: '123-asdf-098',
       })
 
       await expect(spy).rejects.toThrow('missing param: carCategoryRepository')

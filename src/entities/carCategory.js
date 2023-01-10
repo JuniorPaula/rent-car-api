@@ -18,7 +18,10 @@ export class CarCategoryEntity {
   }
 
   async getCarCategory({ carCategoryId }) {
-    if (!this.carCategoryRepository.findAll) {
+    if (
+      !this.carCategoryRepository.findAll ||
+      !this.carCategoryRepository.findById
+    ) {
       throw new MissingParamError('carCategoryRepository')
     }
 
