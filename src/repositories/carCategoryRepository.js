@@ -9,19 +9,14 @@ export class CarCategoryRepository {
     if (!price) {
       throw new MissingParamError('price')
     }
-
-    const carCategoryModel = await MongoDBProvider.getCollection(
-      'car_categories',
-    )
+    const carCategoryModel = await this.#getCollectionModel()
 
     const res = await carCategoryModel.insertOne({ categoryName, price })
     return res
   }
 
   async findAll() {
-    const carCategoryModel = await MongoDBProvider.getCollection(
-      'car_categories',
-    )
+    const carCategoryModel = await this.#getCollectionModel()
     const carCategories = await carCategoryModel.find().toArray()
     return carCategories
   }
@@ -31,10 +26,15 @@ export class CarCategoryRepository {
       throw new MissingParamError('carCategoryId')
     }
 
+    const carCategoryModel = await this.#getCollectionModel()
+    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+    return carCategory
+  }
+
+  async #getCollectionModel() {
     const carCategoryModel = await MongoDBProvider.getCollection(
       'car_categories',
     )
-    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
-    return carCategory
+    return carCategoryModel
   }
 }
