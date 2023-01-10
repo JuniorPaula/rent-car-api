@@ -27,6 +27,10 @@ export class CarCategoryRepository {
   }
 
   async findById({ carCategoryId }) {
+    if (!carCategoryId) {
+      throw new MissingParamError('carCategoryId')
+    }
+
     const carCategoryModel = await MongoDBProvider.getCollection(
       'car_categories',
     )

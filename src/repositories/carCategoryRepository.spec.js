@@ -88,5 +88,11 @@ describe('CarCategory Repository', () => {
       expect(carCategory.categoryName).toStrictEqual('SUV')
       expect(carCategory.price).toStrictEqual('110.00')
     })
+
+    test('Should throws if no params are provided', async () => {
+      await expect(sut.findById({})).rejects.toThrow(
+        'missing param: carCategoryId',
+      )
+    })
   })
 })
