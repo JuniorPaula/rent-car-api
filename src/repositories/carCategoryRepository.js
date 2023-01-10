@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb'
 import { MongoDBProvider } from '../providers/mongodbProvider.js'
 import { MissingParamError } from '../validations/errors/index.js'
 
@@ -27,7 +28,10 @@ export class CarCategoryRepository {
     }
 
     const carCategoryModel = await this.#getCollectionModel()
-    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+    const carCategory = await carCategoryModel.findOne({
+      _id: new ObjectId(carCategoryId),
+    })
+
     return carCategory
   }
 
