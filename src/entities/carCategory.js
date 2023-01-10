@@ -16,4 +16,12 @@ export class CarCategoryEntity {
 
     await this.carCategoryRepository.save({ categoryName, price })
   }
+
+  async getCarCategory({ carCategoryId }) {
+    if (!carCategoryId) {
+      return
+    }
+
+    await this.carCategoryRepository.findById({ carCategoryId })
+  }
 }

@@ -7,6 +7,10 @@ const mockCarCategoryRepositoryStub = () => {
       this.categoryName = categoryName
       this.price = price
     }
+
+    async findById({ carCategoryId }) {
+      this.carCategoryId = carCategoryId
+    }
   }
 
   return new CarCategoryRepositoryStub()
@@ -75,6 +79,22 @@ describe('CarCategory Entity', () => {
       })
 
       await expect(promise).rejects.toThrow()
+    })
+  })
+
+  describe('#Load car category', () => {
+    test('Should call CarCategoryRepository.findById if carCategoryId is provided', async () => {
+      const getCarCategorySpy = jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.findById.name,
+      )
+
+      await sut.getCarCategory({ carCategoryId: '123-asdf-098' })
+
+      expect(getCarCategorySpy).toHaveBeenCalledWith({
+        carCategoryId: '123-asdf-098',
+      })
+      expect(getCarCategorySpy).toHaveBeenCalledTimes(1)
     })
   })
 })
