@@ -22,7 +22,7 @@ const mockCarCategoryEntityStub = () => {
       }
 
       const carCategories = carCategoryDB.find(
-        (categoryId) => categoryId === carCategoryId,
+        (categoryId) => categoryId._id === carCategoryId,
       )
 
       return Promise.resolve(carCategories)
@@ -110,5 +110,21 @@ describe('LoadCarCategoryController', () => {
         price: '150.90',
       },
     ])
+  })
+
+  test('should return a specific car category if param are provided', async () => {
+    const httpRequest = {
+      params: {
+        carCategoryId: '123-asdf-098',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      _id: '123-asdf-098',
+      categoryName: 'SUV',
+      price: '110.00',
+    })
   })
 })
