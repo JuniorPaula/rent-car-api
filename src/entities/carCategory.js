@@ -18,6 +18,10 @@ export class CarCategoryEntity {
   }
 
   async getCarCategory({ carCategoryId }) {
+    if (!this.carCategoryRepository.findAll) {
+      throw new MissingParamError('carCategoryRepository')
+    }
+
     if (!carCategoryId) {
       const carCategories = await this.carCategoryRepository.findAll()
       return carCategories
