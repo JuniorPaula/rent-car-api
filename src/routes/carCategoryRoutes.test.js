@@ -47,4 +47,21 @@ describe('CarCategory Routes', () => {
       await request(app).get('/category/findAll').expect(200)
     })
   })
+
+  describe('GET /findById/:carCategoryId', () => {
+    test('Should return 200 when find a car category by id', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+      const carCategoryId = res.insertedIds[0]
+      await request(app).get(`/category/findById/${carCategoryId}`).expect(200)
+    })
+  })
 })
