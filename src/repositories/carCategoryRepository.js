@@ -17,4 +17,12 @@ export class CarCategoryRepository {
     const res = await carCategoryModel.insertOne({ categoryName, price })
     return res
   }
+
+  async findAll() {
+    const carCategoryModel = await MongoDBProvider.getCollection(
+      'car_categories',
+    )
+    const carCategories = await carCategoryModel.find().toArray()
+    return carCategories
+  }
 }

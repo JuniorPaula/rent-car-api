@@ -49,4 +49,23 @@ describe('CarCategory Repository', () => {
       expect(carCategory.price).toStrictEqual('150.90')
     })
   })
+
+  describe('FindAll car category', () => {
+    test('Should return all cars categories on success', async () => {
+      await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+      const carCategories = await sut.findAll()
+
+      expect(carCategories[0].categoryName).toStrictEqual('SUV')
+      expect(carCategories[1].categoryName).toStrictEqual('Crew Cab Pickup')
+    })
+  })
 })
