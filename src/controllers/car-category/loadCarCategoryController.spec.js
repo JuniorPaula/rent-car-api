@@ -1,13 +1,5 @@
 import { describe, test, expect, beforeEach } from '@jest/globals'
-import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
-
-class LoadCarCategoryController {
-  async handle(httpRequest) {
-    if (!httpRequest) {
-      return HttpResponseStatus.serverError()
-    }
-  }
-}
+import { LoadCarCategoryController } from './loadCarCategoryController.js'
 
 describe('LoadCarCategoryController', () => {
   let sut = {}
