@@ -12,10 +12,11 @@ const mockCarCategoryEntityStub = () => {
 }
 
 describe('LoadCarCategoryController', () => {
-  let carCategoryEntityStub = mockCarCategoryEntityStub()
+  let carCategoryEntityStub
   let sut = {}
 
   beforeEach(() => {
+    carCategoryEntityStub = mockCarCategoryEntityStub()
     sut = new LoadCarCategoryController(carCategoryEntityStub)
   })
 
@@ -39,6 +40,19 @@ describe('LoadCarCategoryController', () => {
     await sut.handle(httpRequest)
 
     expect(getSpy).toHaveBeenCalledWith({ carCategoryId: '123-asdf-098' })
+    expect(getSpy).toHaveBeenCalledTimes(1)
+  })
+
+  test('When CarCategoryEntity to called without param, getCarCategory should it called to be null', async () => {
+    const httpRequest = {}
+
+    const getSpy = jest.spyOn(
+      carCategoryEntityStub,
+      carCategoryEntityStub.getCarCategory.name,
+    )
+    await sut.handle(httpRequest)
+
+    expect(getSpy).toHaveBeenCalledWith({ carCategoryId: null })
     expect(getSpy).toHaveBeenCalledTimes(1)
   })
 })

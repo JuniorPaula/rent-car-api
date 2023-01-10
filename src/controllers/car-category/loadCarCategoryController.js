@@ -10,7 +10,12 @@ export class LoadCarCategoryController {
       return HttpResponseStatus.serverError()
     }
 
-    const { carCategoryId } = httpRequest.params
+    const params = httpRequest.params
+    let carCategoryId = null
+    if (params) {
+      carCategoryId = params.carCategoryId
+    }
+
     await this.carCategoryEntity.getCarCategory({ carCategoryId })
   }
 }
