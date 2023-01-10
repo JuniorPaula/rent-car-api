@@ -1,4 +1,4 @@
-import { describe, test, expect } from '@jest/globals'
+import { describe, test, expect, beforeEach } from '@jest/globals'
 import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
 
 class LoadCarCategoryController {
@@ -10,8 +10,13 @@ class LoadCarCategoryController {
 }
 
 describe('LoadCarCategoryController', () => {
+  let sut = {}
+
+  beforeEach(() => {
+    sut = new LoadCarCategoryController()
+  })
+
   test('Should return 500 if no httpRequest is provided', async () => {
-    const sut = new LoadCarCategoryController()
     const httpResponse = await sut.handle()
 
     expect(httpResponse.statusCode).toBe(500)
