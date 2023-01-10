@@ -30,7 +30,7 @@ const mockCarCategoryRepositoryStub = () => {
     }
 
     async findAll() {
-      return 'ok'
+      return carCategoryDB
     }
   }
 
@@ -121,7 +121,7 @@ describe('CarCategory Entity', () => {
     test('Should call CarCategoryRepository.findAll if carCategoryId to be null', async () => {
       const getCarCategorySpy = jest.spyOn(
         carCategoryRepositoryStub,
-        carCategoryRepositoryStub.findById.name,
+        carCategoryRepositoryStub.findAll.name,
       )
 
       await sut.getCarCategory({ carCategoryId: null })
@@ -145,6 +145,19 @@ describe('CarCategory Entity', () => {
         categoryName: 'SUV',
         price: '110.00',
       })
+    })
+
+    test('Should return all car categories when carCategoryId is not provided', async () => {
+      jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.findAll.name,
+      )
+
+      const carCategory = await sut.getCarCategory({
+        carCategoryId: null,
+      })
+
+      expect(carCategory).toEqual(carCategoryDB)
     })
   })
 })

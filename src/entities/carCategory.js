@@ -19,7 +19,8 @@ export class CarCategoryEntity {
 
   async getCarCategory({ carCategoryId }) {
     if (!carCategoryId) {
-      await this.carCategoryRepository.findAll()
+      const carCategories = await this.carCategoryRepository.findAll()
+      return carCategories
     }
 
     const carCategory = await this.carCategoryRepository.findById({
