@@ -11,6 +11,10 @@ const mockCarCategoryRepositoryStub = () => {
     async findById({ carCategoryId }) {
       this.carCategoryId = carCategoryId
     }
+
+    async findAll() {
+      return 'ok'
+    }
   }
 
   return new CarCategoryRepositoryStub()
@@ -94,6 +98,18 @@ describe('CarCategory Entity', () => {
       expect(getCarCategorySpy).toHaveBeenCalledWith({
         carCategoryId: '123-asdf-098',
       })
+      expect(getCarCategorySpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('Should call CarCategoryRepository.findAll if carCategoryId to be null', async () => {
+      const getCarCategorySpy = jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.findById.name,
+      )
+
+      await sut.getCarCategory({ carCategoryId: null })
+
+      expect(getCarCategorySpy).toBeCalled()
       expect(getCarCategorySpy).toHaveBeenCalledTimes(1)
     })
   })
