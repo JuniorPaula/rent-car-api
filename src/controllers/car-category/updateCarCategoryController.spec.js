@@ -7,6 +7,12 @@ const mockCarCategoryEntityStub = () => {
       this.carCategoryId = carCategoryId
       this.categoryName = categoryName
       this.price = price
+
+      return Promise.resolve({
+        _id: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.00',
+      })
     }
   }
 
@@ -95,5 +101,25 @@ describe('UpdateCarCategoryController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('should return a car category updated on success', async () => {
+    const httpRequest = {
+      params: {
+        carCategoryId: '123-asdf-098',
+      },
+      body: {
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      _id: '123-asdf-098',
+      categoryName: 'Crew Cab Pickup updated',
+      price: '170.00',
+    })
   })
 })

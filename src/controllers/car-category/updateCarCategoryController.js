@@ -14,11 +14,12 @@ export class UpdateCarCategoryController {
       const { carCategoryId } = httpRequest.params
       const { categoryName, price } = httpRequest.body
 
-      await this.carCategoryEntity.update({
+      const carCategory = await this.carCategoryEntity.update({
         carCategoryId,
         categoryName,
         price,
       })
+      return HttpResponseStatus.ok(carCategory)
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
