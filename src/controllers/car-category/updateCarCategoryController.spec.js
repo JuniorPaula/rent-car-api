@@ -14,4 +14,12 @@ describe('UpdateCarCategoryController', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
   })
+
+  test('Should return 500 if httpRequest has no params', async () => {
+    const httpRequest = {}
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
