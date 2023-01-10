@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "node ./src/main/server.js",
     "seed": "node ./seed",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests",
     "test:unit": "npm test -- -c jest-unit-config.js",
@@ -29,6 +30,7 @@
     "supertest": "^6.3.3"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongodb": "^4.13.0"
   }
