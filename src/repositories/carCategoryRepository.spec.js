@@ -50,7 +50,7 @@ describe('CarCategory Repository', () => {
     })
   })
 
-  describe('FindAll car category', () => {
+  describe('#FindAll car category', () => {
     test('Should return all cars categories on success', async () => {
       await carCategoryModel.insertMany([
         {
@@ -66,6 +66,27 @@ describe('CarCategory Repository', () => {
 
       expect(carCategories[0].categoryName).toStrictEqual('SUV')
       expect(carCategories[1].categoryName).toStrictEqual('Crew Cab Pickup')
+    })
+  })
+
+  describe('#FindById car category', () => {
+    test('Should return a specific car category on success', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+
+      const carCategoryId = res.insertedIds[0]
+      const carCategory = await sut.findById({ carCategoryId })
+
+      expect(carCategory.categoryName).toStrictEqual('SUV')
+      expect(carCategory.price).toStrictEqual('110.00')
     })
   })
 })

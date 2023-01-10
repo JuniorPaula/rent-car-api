@@ -25,4 +25,12 @@ export class CarCategoryRepository {
     const carCategories = await carCategoryModel.find().toArray()
     return carCategories
   }
+
+  async findById({ carCategoryId }) {
+    const carCategoryModel = await MongoDBProvider.getCollection(
+      'car_categories',
+    )
+    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+    return carCategory
+  }
 }
