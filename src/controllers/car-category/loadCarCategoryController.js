@@ -6,16 +6,20 @@ export class LoadCarCategoryController {
   }
 
   async handle(httpRequest) {
-    if (!httpRequest) {
+    try {
+      if (!httpRequest) {
+        return HttpResponseStatus.serverError()
+      }
+
+      const params = httpRequest.params
+      let carCategoryId = null
+      if (params) {
+        carCategoryId = params.carCategoryId
+      }
+
+      await this.carCategoryEntity.getCarCategory({ carCategoryId })
+    } catch (err) {
       return HttpResponseStatus.serverError()
     }
-
-    const params = httpRequest.params
-    let carCategoryId = null
-    if (params) {
-      carCategoryId = params.carCategoryId
-    }
-
-    await this.carCategoryEntity.getCarCategory({ carCategoryId })
   }
 }
