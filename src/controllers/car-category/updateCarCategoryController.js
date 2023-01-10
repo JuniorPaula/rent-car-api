@@ -6,13 +6,21 @@ export class UpdateCarCategoryController {
   }
 
   async handle(httpRequest) {
-    if (!httpRequest || !httpRequest.params || !httpRequest.body) {
+    try {
+      if (!httpRequest || !httpRequest.params || !httpRequest.body) {
+        return HttpResponseStatus.serverError()
+      }
+
+      const { carCategoryId } = httpRequest.params
+      const { categoryName, price } = httpRequest.body
+
+      await this.carCategoryEntity.update({
+        carCategoryId,
+        categoryName,
+        price,
+      })
+    } catch (err) {
       return HttpResponseStatus.serverError()
     }
-
-    const { carCategoryId } = httpRequest.params
-    const { categoryName, price } = httpRequest.body
-
-    await this.carCategoryEntity.update({ carCategoryId, categoryName, price })
   }
 }
