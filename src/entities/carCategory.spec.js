@@ -185,5 +185,20 @@ describe('CarCategory Entity', () => {
 
       await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
     })
+
+    test('Should throws if any methods CarCategoryRepository throws', async () => {
+      jest
+        .spyOn(
+          carCategoryRepositoryStub,
+          carCategoryRepositoryStub.findAll.name,
+        )
+        .mockImplementationOnce(() => Promise.reject(new Error()))
+
+      const promise = sut.getCarCategory({
+        carCategoryId: null,
+      })
+
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
