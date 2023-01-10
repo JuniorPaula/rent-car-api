@@ -22,6 +22,10 @@ export class CarCategoryEntity {
       await this.carCategoryRepository.findAll()
     }
 
-    await this.carCategoryRepository.findById({ carCategoryId })
+    const carCategory = await this.carCategoryRepository.findById({
+      carCategoryId,
+    })
+
+    return carCategory
   }
 }

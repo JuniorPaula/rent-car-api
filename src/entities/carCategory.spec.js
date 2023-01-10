@@ -1,6 +1,19 @@
 import { describe, test, beforeEach, expect, jest } from '@jest/globals'
 import { CarCategoryEntity } from './carCategory.js'
 
+const carCategoryDB = [
+  {
+    _id: '123-asdf-098',
+    categoryName: 'SUV',
+    price: '110.00',
+  },
+  {
+    _id: '321-asdf-089',
+    categoryName: 'Crew Cab Pickup',
+    price: '150.90',
+  },
+]
+
 const mockCarCategoryRepositoryStub = () => {
   class CarCategoryRepositoryStub {
     async save({ categoryName, price }) {
@@ -9,7 +22,11 @@ const mockCarCategoryRepositoryStub = () => {
     }
 
     async findById({ carCategoryId }) {
-      this.carCategoryId = carCategoryId
+      const carCategory = carCategoryDB.find(
+        (categoryId) => categoryId._id === carCategoryId,
+      )
+
+      return Promise.resolve(carCategory)
     }
 
     async findAll() {
@@ -111,6 +128,23 @@ describe('CarCategory Entity', () => {
 
       expect(getCarCategorySpy).toBeCalled()
       expect(getCarCategorySpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('Should return a specifc car category when carCategoryId is provided', async () => {
+      jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.findById.name,
+      )
+
+      const carCategory = await sut.getCarCategory({
+        carCategoryId: '123-asdf-098',
+      })
+
+      expect(carCategory).toEqual({
+        _id: '123-asdf-098',
+        categoryName: 'SUV',
+        price: '110.00',
+      })
     })
   })
 })
