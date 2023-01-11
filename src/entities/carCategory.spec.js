@@ -229,5 +229,24 @@ describe('CarCategory Entity', () => {
 
       await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
     })
+
+    test('Should call CarCategoryRepository with correct values', async () => {
+      const spyCarCategory = jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.update.name,
+      )
+
+      await sut.update({
+        carCategoryId: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
+
+      expect(spyCarCategory).toHaveBeenCalledWith({
+        carCategoryId: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
+    })
   })
 })
