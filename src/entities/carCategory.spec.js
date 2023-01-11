@@ -248,5 +248,19 @@ describe('CarCategory Entity', () => {
         price: '170.90',
       })
     })
+
+    test('Should throws if CarCategoryRepository to throws', async () => {
+      jest
+        .spyOn(carCategoryRepositoryStub, carCategoryRepositoryStub.update.name)
+        .mockImplementationOnce(() => Promise.reject(new Error()))
+
+      const promise = sut.update({
+        carCategoryId: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
+
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
