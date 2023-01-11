@@ -35,6 +35,14 @@ export class CarCategoryRepository {
     return carCategory
   }
 
+  async update({ carCategoryId, categoryName, price }) {
+    this.categoryName = categoryName
+    this.price = price
+    if (!carCategoryId) {
+      throw new MissingParamError('carCategoryId')
+    }
+  }
+
   async #getCollectionModel() {
     const carCategoryModel = await MongoDBProvider.getCollection(
       'car_categories',

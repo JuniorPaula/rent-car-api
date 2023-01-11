@@ -95,4 +95,15 @@ describe('CarCategory Repository', () => {
       )
     })
   })
+
+  describe('#Update car category', () => {
+    test('Should throws if carCategoryId is not provided', async () => {
+      await expect(
+        sut.update({
+          categoryName: 'Crew Cab Pickup updated',
+          price: '170.90',
+        }),
+      ).rejects.toThrow('missing param: carCategoryId')
+    })
+  })
 })
