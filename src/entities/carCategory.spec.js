@@ -32,6 +32,12 @@ const mockCarCategoryRepositoryStub = () => {
     async findAll() {
       return carCategoryDB
     }
+
+    async update({ carCategoryId, categoryName, price }) {
+      this.carCategoryId = carCategoryId
+      this.categoryName = categoryName
+      this.price = price
+    }
   }
 
   return new CarCategoryRepositoryStub()
@@ -206,6 +212,22 @@ describe('CarCategory Entity', () => {
     test('Should throw if categoryName is not provided', async () => {
       const spy = sut.update({})
       await expect(spy).rejects.toThrow('missing param: categoryName')
+    })
+
+    test('Should throw if CarCategoryRepository has no method update', async () => {
+      class CarCategoryRepositoryStub {
+        async findAll() {}
+      }
+      const fakeRepository = new CarCategoryRepositoryStub()
+
+      const sut = new CarCategoryEntity(fakeRepository)
+      const spy = sut.update({
+        carCategoryId: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
+
+      await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
     })
   })
 })
