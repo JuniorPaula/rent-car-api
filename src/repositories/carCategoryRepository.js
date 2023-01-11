@@ -36,10 +36,12 @@ export class CarCategoryRepository {
   }
 
   async update({ carCategoryId, categoryName, price }) {
-    this.categoryName = categoryName
     this.price = price
     if (!carCategoryId) {
       throw new MissingParamError('carCategoryId')
+    }
+    if (!categoryName) {
+      throw new MissingParamError('categoryName')
     }
   }
 
