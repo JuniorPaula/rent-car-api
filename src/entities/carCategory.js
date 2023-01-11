@@ -45,10 +45,12 @@ export class CarCategoryEntity {
       throw new MissingParamError('categoryName')
     }
 
-    await this.carCategoryRepository.update({
+    const carCategory = await this.carCategoryRepository.update({
       carCategoryId,
       categoryName,
       price,
     })
+
+    return carCategory
   }
 }

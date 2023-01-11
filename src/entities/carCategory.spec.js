@@ -37,6 +37,12 @@ const mockCarCategoryRepositoryStub = () => {
       this.carCategoryId = carCategoryId
       this.categoryName = categoryName
       this.price = price
+
+      return Promise.resolve({
+        _id: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
     }
   }
 
@@ -261,6 +267,20 @@ describe('CarCategory Entity', () => {
       })
 
       await expect(promise).rejects.toThrow()
+    })
+
+    test('Should return car category updated on success', async () => {
+      const carCategoryUpdated = await sut.update({
+        carCategoryId: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
+
+      expect(carCategoryUpdated).toStrictEqual({
+        _id: '123-asdf-098',
+        categoryName: 'Crew Cab Pickup updated',
+        price: '170.90',
+      })
     })
   })
 })
