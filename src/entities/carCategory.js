@@ -36,4 +36,12 @@ export class CarCategoryEntity {
 
     return carCategory
   }
+
+  async update({ carCategoryId, categoryName, price }) {
+    this.carCategoryId = carCategoryId
+    this.price = price
+    if (!categoryName) {
+      throw new MissingParamError('categoryName')
+    }
+  }
 }

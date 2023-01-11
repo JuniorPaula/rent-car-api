@@ -201,4 +201,11 @@ describe('CarCategory Entity', () => {
       await expect(promise).rejects.toThrow()
     })
   })
+
+  describe('#Update car category', () => {
+    test('Should throw if categoryName is not provided', async () => {
+      const spy = sut.update({})
+      await expect(spy).rejects.toThrow('missing param: categoryName')
+    })
+  })
 })
