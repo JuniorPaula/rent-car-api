@@ -63,4 +63,16 @@ describe('DeleteCarCategoryController', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
   })
+
+  test('should return 201 if succeeds', async () => {
+    const httpRequest = {
+      params: {
+        carCategoryId: '123-asdf-098',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(201)
+    expect(httpResponse.body).toBe('no content')
+  })
 })

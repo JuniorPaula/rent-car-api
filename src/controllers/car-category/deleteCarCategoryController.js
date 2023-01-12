@@ -13,6 +13,8 @@ export class DeleteCarCategoryController {
 
       const { carCategoryId } = httpRequest.params
       await this.carCategoryEntity.delete({ carCategoryId })
+
+      return HttpResponseStatus.noContent()
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
