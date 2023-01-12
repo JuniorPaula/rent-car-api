@@ -36,12 +36,21 @@ export class CarCategoryRepository {
   }
 
   async update({ carCategoryId, categoryName, price }) {
-    this.price = price
     if (!carCategoryId) {
       throw new MissingParamError('carCategoryId')
     }
     if (!categoryName) {
       throw new MissingParamError('categoryName')
+    }
+
+    const carCategoryModel = await this.#getCollectionModel()
+    if (!price) {
+      await carCategoryModel.updateOne(
+        { _id: new ObjectId(carCategoryId) },
+        { $set: { categoryName } },
+      )
+      const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+      return carCategory
     }
   }
 

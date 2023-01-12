@@ -114,5 +114,27 @@ describe('CarCategory Repository', () => {
         }),
       ).rejects.toThrow('missing param: categoryName')
     })
+
+    test('Should update categoryName if price is not provided', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+
+      const carCategoryId = res.insertedIds[0]
+      const carCategory = await sut.update({
+        carCategoryId,
+        categoryName: 'SUV updated',
+      })
+
+      expect(carCategory.categoryName).toStrictEqual('SUV updated')
+      expect(carCategory.price).toStrictEqual('110.00')
+    })
   })
 })
