@@ -86,5 +86,25 @@ describe('CarCategory Routes', () => {
         })
         .expect(200)
     })
+
+    test('Should return 200 and updated data when just categoryName is provided', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+      const carCategoryId = res.insertedIds[0]
+      await request(app)
+        .put(`/category/update/${carCategoryId}`)
+        .send({
+          categoryName: 'SUV updated',
+        })
+        .expect(200)
+    })
   })
 })
