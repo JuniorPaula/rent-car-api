@@ -1,13 +1,5 @@
 import { describe, test, expect } from '@jest/globals'
-import { HttpResponseStatus } from '../../utils/httpResponseStatus'
-
-class DeleteCarCategoryController {
-  async handle(httpRequest) {
-    if (!httpRequest) {
-      return HttpResponseStatus.serverError()
-    }
-  }
-}
+import { DeleteCarCategoryController } from './deleteCarCategoryController.js'
 
 describe('DeleteCarCategoryController', () => {
   test('Should return 500 if no httpRequest is provided', async () => {
