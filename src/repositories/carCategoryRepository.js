@@ -49,7 +49,9 @@ export class CarCategoryRepository {
         { _id: new ObjectId(carCategoryId) },
         { $set: { categoryName } },
       )
-      const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+      const carCategory = await carCategoryModel.findOne({
+        _id: new ObjectId(carCategoryId),
+      })
       return carCategory
     }
 
@@ -57,7 +59,10 @@ export class CarCategoryRepository {
       { _id: new ObjectId(carCategoryId) },
       { $set: { categoryName, price } },
     )
-    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+    const carCategory = await carCategoryModel.findOne({
+      _id: new ObjectId(carCategoryId),
+    })
+
     return carCategory
   }
 
