@@ -6,11 +6,15 @@ export class DeleteCarCategoryController {
   }
 
   async handle(httpRequest) {
-    if (!httpRequest) {
+    try {
+      if (!httpRequest) {
+        return HttpResponseStatus.serverError()
+      }
+
+      const { carCategoryId } = httpRequest.params
+      await this.carCategoryEntity.delete({ carCategoryId })
+    } catch (err) {
       return HttpResponseStatus.serverError()
     }
-
-    const { carCategoryId } = httpRequest.params
-    await this.carCategoryEntity.delete({ carCategoryId })
   }
 }
