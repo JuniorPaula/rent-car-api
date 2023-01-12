@@ -52,6 +52,13 @@ export class CarCategoryRepository {
       const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
       return carCategory
     }
+
+    await carCategoryModel.updateOne(
+      { _id: new ObjectId(carCategoryId) },
+      { $set: { categoryName, price } },
+    )
+    const carCategory = await carCategoryModel.findOne({ _id: carCategoryId })
+    return carCategory
   }
 
   async #getCollectionModel() {

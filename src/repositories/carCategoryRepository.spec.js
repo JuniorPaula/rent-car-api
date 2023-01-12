@@ -136,5 +136,28 @@ describe('CarCategory Repository', () => {
       expect(carCategory.categoryName).toStrictEqual('SUV updated')
       expect(carCategory.price).toStrictEqual('110.00')
     })
+
+    test('Should update categoryName and price if theys are provided', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+
+      const carCategoryId = res.insertedIds[0]
+      const carCategory = await sut.update({
+        carCategoryId,
+        price: '150.90',
+        categoryName: 'SUV updated',
+      })
+
+      expect(carCategory.categoryName).toStrictEqual('SUV updated')
+      expect(carCategory.price).toStrictEqual('150.90')
+    })
   })
 })
