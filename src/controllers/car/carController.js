@@ -25,6 +25,8 @@ export class CarController {
         available,
         carCategoryId,
       })
+
+      return HttpResponseStatus.created()
     } catch (err) {
       return HttpResponseStatus.serverError()
     }

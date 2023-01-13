@@ -139,4 +139,20 @@ describe('CarController', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
   })
+
+  test('Should return 201 if succeeds', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+        carCategoryId: '123-asdf-098',
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(201)
+    expect(httpResponse.body).toBe('created')
+  })
 })
