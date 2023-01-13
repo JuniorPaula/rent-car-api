@@ -302,5 +302,17 @@ describe('CarCategory Entity', () => {
       })
       expect(spy).toHaveBeenCalledTimes(1)
     })
+
+    test('Should throw if CarCategoryRepository has no method delete', async () => {
+      class CarCategoryRepositoryStub {}
+      const fakeRepository = new CarCategoryRepositoryStub()
+
+      const sut = new CarCategoryEntity(fakeRepository)
+      const spy = sut.delete({
+        carCategoryId: '123-asdf-098',
+      })
+
+      await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
+    })
   })
 })

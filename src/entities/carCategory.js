@@ -55,6 +55,10 @@ export class CarCategoryEntity {
   }
 
   async delete({ carCategoryId }) {
+    if (!this.carCategoryRepository.delete) {
+      throw new MissingParamError('carCategoryRepository')
+    }
+
     await this.carCategoryRepository.delete({ carCategoryId })
   }
 }
