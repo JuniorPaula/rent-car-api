@@ -107,4 +107,22 @@ describe('CarCategory Routes', () => {
         .expect(200)
     })
   })
+
+  describe('DELETE /delete', () => {
+    test('Should return 201 when delete succeeds', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+      const carCategoryId = res.insertedIds[0]
+
+      await request(app).delete(`/category/delete/${carCategoryId}`).expect(201)
+    })
+  })
 })
