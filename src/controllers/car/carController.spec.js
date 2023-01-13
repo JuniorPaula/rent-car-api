@@ -27,6 +27,7 @@ describe('CarController', () => {
       body: {
         releaseYear: '2023',
         available: true,
+        carCategoryId: '123-asdf-098',
       },
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -35,11 +36,26 @@ describe('CarController', () => {
     expect(httpResponse.error.message).toBe('missing param: name')
   })
 
+  test('Should return 400 if carCategoryId is not provided', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.error.message).toBe('missing param: carCategoryId')
+  })
+
   test('Should return 400 if releaseYear is not provided', async () => {
     const httpRequest = {
       body: {
         name: 'Taurus',
         available: true,
+        carCategoryId: '123-asdf-098',
       },
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -53,6 +69,7 @@ describe('CarController', () => {
       body: {
         name: 'Taurus',
         releaseYear: '2023',
+        carCategoryId: '123-asdf-098',
       },
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -82,6 +99,7 @@ describe('CarController', () => {
         name: 'Taurus',
         releaseYear: '2023',
         available: true,
+        carCategoryId: '123-asdf-098',
       },
     }
 
@@ -93,6 +111,7 @@ describe('CarController', () => {
       name: 'Taurus',
       releaseYear: '2023',
       available: true,
+      carCategoryId: '123-asdf-098',
     })
   })
 
@@ -102,6 +121,7 @@ describe('CarController', () => {
         name: 'Taurus',
         releaseYear: '2023',
         available: true,
+        carCategoryId: '123-asdf-098',
       },
     }
 

@@ -11,15 +11,20 @@ export class CarController {
         return HttpResponseStatus.serverError()
       }
 
-      const fields = ['name', 'releaseYear', 'available']
+      const fields = ['name', 'releaseYear', 'available', 'carCategoryId']
       for (const field of fields) {
         if (!httpRequest.body[field]) {
           return HttpResponseStatus.badRequest(field)
         }
       }
 
-      const { name, releaseYear, available } = httpRequest.body
-      await this.carEntity.create({ name, releaseYear, available })
+      const { name, releaseYear, available, carCategoryId } = httpRequest.body
+      await this.carEntity.create({
+        name,
+        releaseYear,
+        available,
+        carCategoryId,
+      })
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
