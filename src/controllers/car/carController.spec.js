@@ -33,4 +33,17 @@ describe('CarController', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: releaseYear')
   })
+
+  test('Should return 400 if available is not provided', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Taurus',
+        releaseYear: '2023',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.error.message).toBe('missing param: available')
+  })
 })

@@ -9,5 +9,9 @@ export class CarController {
     if (!httpRequest.body.releaseYear) {
       return HttpResponseStatus.badRequest('releaseYear')
     }
+
+    if (!httpRequest.body.available) {
+      return HttpResponseStatus.badRequest('available')
+    }
   }
 }
