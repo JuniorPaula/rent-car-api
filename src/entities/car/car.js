@@ -6,7 +6,7 @@ export class CarEntity {
   }
 
   async create({ name, releaseYear, available, carCategoryId }) {
-    if (!this.carRepository) {
+    if (!this.carRepository || !this.carRepository.create) {
       throw new MissingParamError('carRepository')
     }
     await this.carRepository.create({

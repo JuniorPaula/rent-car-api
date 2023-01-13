@@ -53,5 +53,20 @@ describe('CarEntity', () => {
 
       await expect(spy).rejects.toThrow('missing param: carRepository')
     })
+
+    test('Should throw if CarRepository has no method create', async () => {
+      class CarRepositoryStub {}
+      const fakeRepository = new CarRepositoryStub()
+
+      const sut = new CarEntity(fakeRepository)
+      const spy = sut.create({
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+        carCategoryId: '123-asdf-098',
+      })
+
+      await expect(spy).rejects.toThrow('missing param: carRepository')
+    })
   })
 })
