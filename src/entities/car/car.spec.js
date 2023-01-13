@@ -68,5 +68,20 @@ describe('CarEntity', () => {
 
       await expect(spy).rejects.toThrow('missing param: carRepository')
     })
+
+    test('Should throws if CarRepository to throws', async () => {
+      jest
+        .spyOn(carRepositoryStub, carRepositoryStub.create.name)
+        .mockImplementationOnce(() => Promise.reject(new Error()))
+
+      const promise = sut.create({
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+        carCategoryId: '123-asdf-098',
+      })
+
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
