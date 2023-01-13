@@ -21,7 +21,7 @@ export class CarCategoryController {
       const { categoryName, price } = httpRequest.body
       await this.carCategoryEntity.create({ categoryName, price })
 
-      return HttpResponseStatus.noContent()
+      return HttpResponseStatus.created()
     } catch (err) {
       return HttpResponseStatus.serverError()
     }

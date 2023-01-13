@@ -8,9 +8,16 @@ export class HttpResponseStatus {
     }
   }
 
-  static noContent() {
+  static created() {
     return {
       statusCode: 201,
+      body: 'created',
+    }
+  }
+
+  static noContent() {
+    return {
+      statusCode: 204,
       body: 'no content',
     }
   }

@@ -109,6 +109,6 @@ describe('Customer controller', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(201)
-    expect(httpResponse.body).toBe('no content')
+    expect(httpResponse.body).toBe('created')
   })
 })

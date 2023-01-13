@@ -21,7 +21,7 @@ export class CustomerController {
       const { name, age } = httpRequest.body
       await this.customerEntity.saveCustomer({ name, age })
 
-      return HttpResponseStatus.noContent()
+      return HttpResponseStatus.created()
     } catch (err) {
       return HttpResponseStatus.serverError()
     }

@@ -109,7 +109,7 @@ describe('CarCategory Routes', () => {
   })
 
   describe('DELETE /delete', () => {
-    test('Should return 201 when delete succeeds', async () => {
+    test('Should return 204 when delete succeeds', async () => {
       const res = await carCategoryModel.insertMany([
         {
           categoryName: 'SUV',
@@ -122,7 +122,7 @@ describe('CarCategory Routes', () => {
       ])
       const carCategoryId = res.insertedIds[0]
 
-      await request(app).delete(`/category/delete/${carCategoryId}`).expect(201)
+      await request(app).delete(`/category/delete/${carCategoryId}`).expect(204)
     })
   })
 })
