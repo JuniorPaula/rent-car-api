@@ -1,13 +1,5 @@
 import { describe, test, expect } from '@jest/globals'
-import { HttpResponseStatus } from '../../utils/httpResponseStatus'
-
-class CarController {
-  async handle(httpRequest) {
-    if (!httpRequest.body.name) {
-      return HttpResponseStatus.badRequest('name')
-    }
-  }
-}
+import { CarController } from './carController.js'
 
 describe('CarController', () => {
   test('Should return 400 if name is not provided', async () => {
