@@ -53,4 +53,8 @@ export class CarCategoryEntity {
 
     return carCategory
   }
+
+  async delete({ carCategoryId }) {
+    await this.carCategoryRepository.delete({ carCategoryId })
+  }
 }

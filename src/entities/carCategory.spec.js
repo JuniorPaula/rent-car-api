@@ -44,6 +44,10 @@ const mockCarCategoryRepositoryStub = () => {
         price: '170.90',
       })
     }
+
+    async delete({ carCategoryId }) {
+      this.carCategoryId = carCategoryId
+    }
   }
 
   return new CarCategoryRepositoryStub()
@@ -281,6 +285,22 @@ describe('CarCategory Entity', () => {
         categoryName: 'Crew Cab Pickup updated',
         price: '170.90',
       })
+    })
+  })
+
+  describe('#Delete car category', () => {
+    test('Should call CarCategoryRepository.delete if correct carCategoryId', async () => {
+      const spy = jest.spyOn(
+        carCategoryRepositoryStub,
+        carCategoryRepositoryStub.delete.name,
+      )
+
+      await sut.delete({ carCategoryId: '123-asdf-098' })
+
+      expect(spy).toHaveBeenCalledWith({
+        carCategoryId: '123-asdf-098',
+      })
+      expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 })
