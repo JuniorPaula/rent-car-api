@@ -41,5 +41,17 @@ describe('CarEntity', () => {
         carCategoryId: '123-asdf-098',
       })
     })
+
+    test('Should throw if no repository are provided on constructor', async () => {
+      const sut = new CarEntity()
+      const spy = sut.create({
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+        carCategoryId: '123-asdf-098',
+      })
+
+      await expect(spy).rejects.toThrow('missing param: carRepository')
+    })
   })
 })
