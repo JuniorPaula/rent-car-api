@@ -68,7 +68,7 @@ export class CarCategoryRepository {
 
   async delete({ carCategoryId }) {
     const carCategoryModel = await this.#getCollectionModel('car_categories')
-    await carCategoryModel.deleteOne({ _id: carCategoryId })
+    await carCategoryModel.deleteOne({ _id: new ObjectId(carCategoryId) })
   }
 
   async #getCollectionModel() {
