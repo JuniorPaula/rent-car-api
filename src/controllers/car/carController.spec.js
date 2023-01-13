@@ -95,4 +95,28 @@ describe('CarController', () => {
       available: true,
     })
   })
+
+  test('Should return 500 if CarEntity throws', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+      },
+    }
+
+    class CarCategoryEntityStub {
+      async create() {
+        throw new Error()
+      }
+    }
+
+    const carCategoryEntity = new CarCategoryEntityStub()
+    const sut = new CarController(carCategoryEntity)
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
