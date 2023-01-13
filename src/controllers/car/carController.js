@@ -5,5 +5,9 @@ export class CarController {
     if (!httpRequest.body.name) {
       return HttpResponseStatus.badRequest('name')
     }
+
+    if (!httpRequest.body.releaseYear) {
+      return HttpResponseStatus.badRequest('releaseYear')
+    }
   }
 }
