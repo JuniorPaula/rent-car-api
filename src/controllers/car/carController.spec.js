@@ -1,7 +1,13 @@
-import { describe, test, expect } from '@jest/globals'
+import { describe, test, expect, beforeEach } from '@jest/globals'
 import { CarController } from './carController.js'
 
 describe('CarController', () => {
+  let sut = {}
+
+  beforeEach(() => {
+    sut = new CarController()
+  })
+
   test('Should return 400 if name is not provided', async () => {
     const httpRequest = {
       body: {
@@ -9,7 +15,6 @@ describe('CarController', () => {
         available: true,
       },
     }
-    const sut = new CarController()
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
