@@ -1,11 +1,25 @@
-import { describe, test, expect, beforeEach } from '@jest/globals'
+import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { CarController } from './carController.js'
 
+const mockCarEntity = () => {
+  class CarEntityStub {
+    async create({ name, releaseYear, available }) {
+      this.name = name
+      this.releaseYear = releaseYear
+      this.available = available
+    }
+  }
+
+  return new CarEntityStub()
+}
+
 describe('CarController', () => {
+  let carEntityStub
   let sut = {}
 
   beforeEach(() => {
-    sut = new CarController()
+    carEntityStub = mockCarEntity()
+    sut = new CarController(carEntityStub)
   })
 
   test('Should return 400 if name is not provided', async () => {
@@ -60,5 +74,25 @@ describe('CarController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('Should call CarEntity with correct values', async () => {
+    const httpRequest = {
+      body: {
+        name: 'Taurus',
+        releaseYear: '2023',
+        available: true,
+      },
+    }
+
+    const spy = jest.spyOn(carEntityStub, carEntityStub.create.name)
+
+    await sut.handle(httpRequest)
+
+    expect(spy).toHaveBeenCalledWith({
+      name: 'Taurus',
+      releaseYear: '2023',
+      available: true,
+    })
   })
 })

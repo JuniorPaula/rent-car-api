@@ -1,6 +1,10 @@
 import { HttpResponseStatus } from '../../utils/httpResponseStatus'
 
 export class CarController {
+  constructor(carEntity) {
+    this.carEntity = carEntity
+  }
+
   async handle(httpRequest) {
     if (!httpRequest || !httpRequest.body) {
       return HttpResponseStatus.serverError()
@@ -12,5 +16,8 @@ export class CarController {
         return HttpResponseStatus.badRequest(field)
       }
     }
+
+    const { name, releaseYear, available } = httpRequest.body
+    await this.carEntity.create({ name, releaseYear, available })
   }
 }
