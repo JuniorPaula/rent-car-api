@@ -1,4 +1,4 @@
-import { MongoDBProvider } from '../../providers/mongodbProvider'
+import { MongoDBProvider } from '../../providers/mongodbProvider.js'
 
 export class CarRepository {
   async create({ name, releaseYear, available, carCategoryId }) {
