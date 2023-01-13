@@ -66,6 +66,11 @@ export class CarCategoryRepository {
     return carCategory
   }
 
+  async delete({ carCategoryId }) {
+    const carCategoryModel = await this.#getCollectionModel('car_categories')
+    await carCategoryModel.deleteOne({ _id: carCategoryId })
+  }
+
   async #getCollectionModel() {
     const carCategoryModel = await MongoDBProvider.getCollection(
       'car_categories',

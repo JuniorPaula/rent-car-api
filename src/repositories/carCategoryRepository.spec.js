@@ -160,4 +160,26 @@ describe('CarCategory Repository', () => {
       expect(carCategory.price).toStrictEqual('150.90')
     })
   })
+
+  describe('#Delete car category', () => {
+    test('Should delete a carCategory on success', async () => {
+      const res = await carCategoryModel.insertMany([
+        {
+          categoryName: 'SUV',
+          price: '110.00',
+        },
+        {
+          categoryName: 'Crew Cab Pickup',
+          price: '150.90',
+        },
+      ])
+
+      const carCategoryId = res.insertedIds[0]
+      await sut.delete({ carCategoryId })
+
+      const carCategories = await carCategoryModel.find().toArray()
+
+      expect(carCategories.length).toBe(1)
+    })
+  })
 })
