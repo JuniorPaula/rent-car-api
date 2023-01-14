@@ -7,7 +7,9 @@ export class LoadCarsController {
 
   async handle() {
     try {
-      await this.carEntity.find()
+      const cars = await this.carEntity.find()
+
+      return HttpResponseStatus.ok(cars)
     } catch (err) {
       return HttpResponseStatus.serverError()
     }
