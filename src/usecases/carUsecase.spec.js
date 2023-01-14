@@ -2,23 +2,34 @@ import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { CarUsecase } from './carUsecase.js'
 import { NumberFormat } from '../utils/numberFormat.js'
 import { Transaction } from '../entities/transaction.js'
-import { join } from 'path'
-import { fileURLToPath } from 'url'
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const carsDatabase = join(__dirname, './../../database', 'cars.json')
 
 const mocks = {
   validCarCategory: (await import('../../mocks/valid-carCategory.json'))
     .default,
   validCar: (await import('../../mocks/valid-car.json')).default,
   validCustomer: (await import('../../mocks/valid-customer.json')).default,
+  cars: (await import('../../mocks/cars.json')).default,
+}
+
+const mockCarRepository = () => {
+  class CarRepositoryStub {
+    async find(carId) {
+      const cars = mocks.cars
+
+      const car = cars.find((el) => el._id === carId)
+      return car
+    }
+  }
+  return new CarRepositoryStub()
 }
 
 describe('CarUsecase suite test', () => {
+  let carRepositoryStub
   let carUsecase = {}
+
   beforeEach(() => {
-    carUsecase = new CarUsecase({ cars: carsDatabase })
+    carRepositoryStub = mockCarRepository()
+    carUsecase = new CarUsecase(carRepositoryStub)
   })
 
   test('should retrieve a random position from an array', () => {
@@ -50,7 +61,7 @@ describe('CarUsecase suite test', () => {
     carCategory.carIds = [car.id]
 
     jest
-      .spyOn(carUsecase.carRepository, carUsecase.carRepository.find.name)
+      .spyOn(carRepositoryStub, carRepositoryStub.find.name)
       .mockReturnValueOnce(car)
 
     jest.spyOn(carUsecase, carUsecase.choosenRandomCar.name)
@@ -58,7 +69,7 @@ describe('CarUsecase suite test', () => {
     const result = await carUsecase.getAvailableCar(carCategory)
 
     expect(carUsecase.choosenRandomCar).toHaveBeenCalledTimes(1)
-    expect(carUsecase.carRepository.find).toHaveBeenCalledWith(car.id)
+    expect(carRepositoryStub.find).toHaveBeenCalledWith(car.id)
     expect(result).toEqual(car)
   })
 

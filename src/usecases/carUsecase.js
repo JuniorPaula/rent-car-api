@@ -1,11 +1,10 @@
-import { BaseRepository } from '../repositories/base/baseRepository.js'
 import { Tax } from '../entities/tax.js'
 import { NumberFormat } from '../utils/numberFormat.js'
 import { Transaction } from '../entities/transaction.js'
 
 export class CarUsecase {
-  constructor({ cars }) {
-    this.carRepository = new BaseRepository({ file: cars })
+  constructor(carRepository) {
+    this.carRepository = carRepository
     this.taxesBaseOnAge = Tax.taxesBaseOnAge
   }
 
