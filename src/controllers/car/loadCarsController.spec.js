@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
+import { LoadCarsController } from './loadCarsController.js'
 
 const mockCarEntity = () => {
   class CarEntityStub {
@@ -7,16 +8,6 @@ const mockCarEntity = () => {
     }
   }
   return new CarEntityStub()
-}
-
-class LoadCarsController {
-  constructor(carEntity) {
-    this.carEntity = carEntity
-  }
-
-  async handle() {
-    await this.carEntity.find()
-  }
 }
 
 describe('LoadCarsController', () => {
