@@ -25,4 +25,20 @@ describe('LoadCarsController', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
   })
+
+  test('Should return 500 if CarEntity throws', async () => {
+    class CarEntityStub {
+      async find() {
+        throw new Error()
+      }
+    }
+
+    const carEntity = new CarEntityStub()
+    const sut = new LoadCarsController(carEntity)
+
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })

@@ -1,9 +1,15 @@
+import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
+
 export class LoadCarsController {
   constructor(carEntity) {
     this.carEntity = carEntity
   }
 
   async handle() {
-    await this.carEntity.find()
+    try {
+      await this.carEntity.find()
+    } catch (err) {
+      return HttpResponseStatus.serverError()
+    }
   }
 }
