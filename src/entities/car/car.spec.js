@@ -1,6 +1,10 @@
 import { describe, test, beforeEach, expect, jest } from '@jest/globals'
 import { CarEntity } from './car.js'
 
+const mocks = {
+  cars: (await import('../../../mocks/cars.json')).default,
+}
+
 const mockCarRepository = () => {
   class CarRepositoryStub {
     async create({ name, releaseYear, available, carCategoryId }) {
@@ -11,7 +15,7 @@ const mockCarRepository = () => {
     }
 
     async find() {
-      //
+      return Promise.resolve(mocks.cars)
     }
   }
 
@@ -105,6 +109,24 @@ describe('CarEntity', () => {
       const spy = sut.find()
 
       await expect(spy).rejects.toThrow('missing param: carRepository')
+    })
+
+    test('When call CarRepository.find Should return a list of cars', async () => {
+      const cars = await sut.find()
+      expect(cars).toEqual([
+        {
+          _id: '778dd767-9835-4686-be52-2b8253cc6e99',
+          name: 'Taurus',
+          releaseYear: 2022,
+          available: true,
+        },
+        {
+          _id: '778dd767-9835-4686-be52-123456asdf',
+          name: 'Fiat Cronos',
+          releaseYear: 2023,
+          available: true,
+        },
+      ])
     })
   })
 })

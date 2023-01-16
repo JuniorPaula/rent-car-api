@@ -21,6 +21,8 @@ export class CarEntity {
     if (!this.carRepository.find) {
       throw new MissingParamError('carRepository')
     }
-    await this.carRepository.find()
+
+    const cars = await this.carRepository.find()
+    return cars
   }
 }
