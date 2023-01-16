@@ -51,4 +51,27 @@ describe('Car Repository', () => {
       expect(car.carCategoryId).toEqual(carCategoryId)
     })
   })
+
+  describe('#Load cars', () => {
+    test('Should return a list of cars when find method succeeds', async () => {
+      await carModel.insertMany([
+        {
+          name: 'Taurus',
+          releaseYear: 2022,
+          available: true,
+        },
+        {
+          name: 'Fiat Cronos',
+          releaseYear: 2023,
+          available: true,
+        },
+      ])
+
+      const cars = await sut.find()
+
+      expect(cars.length).toBeGreaterThan(1)
+      expect(cars[0].name).toBe('Taurus')
+      expect(cars[1].name).toBe('Fiat Cronos')
+    })
+  })
 })

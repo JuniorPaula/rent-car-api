@@ -6,6 +6,12 @@ export class CarRepository {
     await carModel.insertOne({ name, releaseYear, available, carCategoryId })
   }
 
+  async find() {
+    const carModel = await MongoDBProvider.getCollection('cars')
+    const cars = await carModel.find().toArray()
+    return cars
+  }
+
   async #getCollectionModel() {
     const carModel = await MongoDBProvider.getCollection('cars')
     return carModel
