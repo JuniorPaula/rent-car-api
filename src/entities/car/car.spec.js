@@ -9,6 +9,10 @@ const mockCarRepository = () => {
       this.available = available
       this.carCategoryId = carCategoryId
     }
+
+    async find() {
+      //
+    }
   }
 
   return new CarRepositoryStub()
@@ -82,6 +86,15 @@ describe('CarEntity', () => {
       })
 
       await expect(promise).rejects.toThrow()
+    })
+  })
+
+  describe('#Load', () => {
+    test('Should call CarRepository.find once time', async () => {
+      const carsSpy = jest.spyOn(carRepositoryStub, carRepositoryStub.find.name)
+
+      await sut.find()
+      expect(carsSpy).toHaveBeenCalled()
     })
   })
 })

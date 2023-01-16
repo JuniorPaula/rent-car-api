@@ -16,4 +16,8 @@ export class CarEntity {
       carCategoryId,
     })
   }
+
+  async find() {
+    await this.carRepository.find()
+  }
 }
