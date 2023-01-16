@@ -40,4 +40,32 @@ describe('Car Routes', () => {
       })
     })
   })
+
+  describe('GET /load', () => {
+    test('Should return 200 if load all cars succeeds', async () => {
+      const res = await carCategoryModel.insertOne({
+        categoryName: 'SUV',
+        price: '110.00',
+      })
+
+      const carCategoryId = res.insertedId
+
+      await carModel.insertMany([
+        {
+          name: 'Taurus',
+          releaseYear: '2023',
+          available: true,
+          carCategoryId,
+        },
+        {
+          name: 'Fiat Cronos',
+          releaseYear: 2023,
+          available: true,
+          carCategoryId,
+        },
+      ])
+
+      await request(app).get('/car/load').expect(200)
+    })
+  })
 })
