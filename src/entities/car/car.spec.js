@@ -96,5 +96,15 @@ describe('CarEntity', () => {
       await sut.find()
       expect(carsSpy).toHaveBeenCalled()
     })
+
+    test('Should throw if CarRepository has no method find', async () => {
+      class CarRepositoryStub {}
+      const fakeRepository = new CarRepositoryStub()
+
+      const sut = new CarEntity(fakeRepository)
+      const spy = sut.find()
+
+      await expect(spy).rejects.toThrow('missing param: carRepository')
+    })
   })
 })

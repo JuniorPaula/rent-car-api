@@ -18,6 +18,9 @@ export class CarEntity {
   }
 
   async find() {
+    if (!this.carRepository.find) {
+      throw new MissingParamError('carRepository')
+    }
     await this.carRepository.find()
   }
 }
