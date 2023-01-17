@@ -1,6 +1,18 @@
 import { describe, test, beforeEach, expect, jest } from '@jest/globals'
 import { RentCarEntity } from './rentCarEntity.js'
 
+// const mocks = {
+//   cars: (await import('../../../mocks/cars.json')).default,
+// }
+
+// const mockCarRepository = () => {
+//   class CarRepositoryStub {
+//     async find() {
+//       return Promise.resolve()
+//     }
+//   }
+// }
+
 const mockCarCategoryRepository = () => {
   class CarCategoryRepositoryStub {
     async findById({ carCategoryId }) {
@@ -50,4 +62,17 @@ describe('RentCarEntity', () => {
 
     await expect(spy).rejects.toThrow('missing param: carRepository')
   })
+
+  // test('Should return all cars when CarRepository to be called', async () => {
+  //   const spy = jest.spyOn(carRepositoryStub, carRepositoryStub.find.name)
+
+  //   await sut.rent({
+  //     customerName: 'Jane Doe',
+  //     customerAge: 34,
+  //     carCategoryId: '63bd42b3b88946ad152404ab',
+  //     numberOfDays: 3,
+  //   })
+
+  //   expect(spy).toHaveBeenCalledWith({ carCategoryId: '123-asdf-098' })
+  // })
 })

@@ -3,12 +3,21 @@
     "_id": "778dd767-9835-4686-be52-2b8253cc6e99",
     "name": "Taurus",
     "releaseYear": 2022,
-    "available": true
+    "available": true,
+    "carCategoryId": "63bd42b3b88946ad152404ab"
   },
   {
     "_id": "778dd767-9835-4686-be52-123456asdf",
     "name": "Fiat Cronos",
     "releaseYear": 2023,
-    "available": true
+    "available": true,
+    "carCategoryId": "63bd42b3b88946ad152404ab"
+  },
+  {
+    "_id": "abcd-9835-4686-be52-123456asdf",
+    "name": "Onix",
+    "releaseYear": 2021,
+    "available": true,
+    "carCategoryId": "63bd42b3b88946ad152404ab_asdasda_Asdassd"
   }
 ]
