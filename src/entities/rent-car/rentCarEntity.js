@@ -10,11 +10,21 @@ export class RentCarEntity {
   }
 
   async rent({ customerName, customerAge, carCategoryId, numberOfDays }) {
-    this.customerName = customerName
-    this.customerAge = customerAge
-    this.carCategoryId = carCategoryId
-    this.numberOfDays = numberOfDays
+    this.#verifyErrors()
 
+    const availableCars = await this.#getCarAvailables(carCategoryId)
+    const customer = await this.#getCustomer(customerName, customerAge)
+
+    const transaction = await this.carUsecase.rent(
+      customer,
+      availableCars,
+      numberOfDays,
+    )
+
+    return transaction
+  }
+
+  #verifyErrors() {
     if (!this.carCategoryRepository.findById) {
       throw new MissingParamError('carCategoryRepository')
     }
@@ -26,7 +36,9 @@ export class RentCarEntity {
     if (!this.carUsecase.rent) {
       throw new MissingParamError('carUsecase')
     }
+  }
 
+  async #getCarAvailables(carCategoryId) {
     const carCategory = await this.carCategoryRepository.findById({
       carCategoryId,
     })
@@ -42,17 +54,14 @@ export class RentCarEntity {
       price: carCategory.price,
     })
 
+    return availableCars
+  }
+
+  async #getCustomer(customerName, customerAge) {
     const customer = new Customer({
       name: customerName,
       age: customerAge,
     })
-
-    const transaction = await this.carUsecase.rent(
-      customer,
-      availableCars,
-      numberOfDays,
-    )
-
-    return transaction
+    return customer
   }
 }
