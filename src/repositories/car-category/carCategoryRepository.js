@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
-import { MongoDBProvider } from '../providers/mongodbProvider.js'
-import { MissingParamError } from '../validations/errors/index.js'
+import { MongoDBProvider } from '../../providers/mongodbProvider.js'
+import { MissingParamError } from '../../validations/errors/index.js'
 
 export class CarCategoryRepository {
   async save({ categoryName, price }) {

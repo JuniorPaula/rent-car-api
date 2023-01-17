@@ -1,8 +1,8 @@
 import { adapterRoutes } from '../adapters/express-routes-adapters.js'
-import { carCategoryFactory } from '../factories/carCategoryFactory.js'
-import { deleteCarCategoryFactory } from '../factories/deleteCarCategoryFactory.js'
-import { loadCarCategoryFactory } from '../factories/loadCarCategoryFactory.js'
-import { updateCarCategoryFactory } from '../factories/updateCarCategoryFactory.js'
+import { carCategoryFactory } from '../factories/car-category/carCategoryFactory.js'
+import { deleteCarCategoryFactory } from '../factories/car-category/deleteCarCategoryFactory.js'
+import { loadCarCategoryFactory } from '../factories/car-category/loadCarCategoryFactory.js'
+import { updateCarCategoryFactory } from '../factories/car-category/updateCarCategoryFactory.js'
 
 const carCategoryRoutes = (router) => {
   router.post('/category/create', adapterRoutes(carCategoryFactory()))

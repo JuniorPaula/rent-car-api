@@ -1,4 +1,4 @@
-import { MissingParamError } from '../validations/errors/index.js'
+import { MissingParamError } from '../../validations/errors/index.js'
 
 export class CarCategoryEntity {
   constructor(carCategoryRepository) {
