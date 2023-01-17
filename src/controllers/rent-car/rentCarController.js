@@ -2,8 +2,11 @@ import { HttpResponseStatus } from '../../utils/httpResponseStatus'
 
 export class RentCarController {
   async hanlde(httpRequest) {
-    if (!httpRequest.body.customerName) {
-      return HttpResponseStatus.badRequest('customerName')
+    const fields = ['customerName', 'customerAge']
+    for (const field of fields) {
+      if (!httpRequest.body[field]) {
+        return HttpResponseStatus.badRequest(field)
+      }
     }
   }
 }
