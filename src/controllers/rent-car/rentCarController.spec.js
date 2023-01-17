@@ -1,11 +1,26 @@
-import { describe, test, expect, beforeEach } from '@jest/globals'
+import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { RentCarController } from './rentCarController.js'
 
+const mockRentCarEntity = () => {
+  class RentCarEntityStub {
+    async rent({ customerName, customerAge, carCategoryId, numberOfDays }) {
+      this.customerName = customerName
+      this.customerAge = customerAge
+      this.carCategoryId = carCategoryId
+      this.numberOfDays = numberOfDays
+    }
+  }
+
+  return new RentCarEntityStub()
+}
+
 describe('RentCarController', () => {
+  let rentCarEntityStub
   let sut = {}
 
   beforeEach(() => {
-    sut = new RentCarController()
+    rentCarEntityStub = mockRentCarEntity()
+    sut = new RentCarController(rentCarEntityStub)
   })
 
   test('Should return 400 if no customerName is provided', async () => {
@@ -81,5 +96,27 @@ describe('RentCarController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('Should calls RentCarEntity with correct values', async () => {
+    const httpRequest = {
+      body: {
+        customerName: 'Jane Doe',
+        customerAge: 34,
+        carCategoryId: '123-asdf-098',
+        numberOfDays: 3,
+      },
+    }
+
+    const spy = jest.spyOn(rentCarEntityStub, rentCarEntityStub.rent.name)
+
+    await sut.handle(httpRequest)
+
+    expect(spy).toHaveBeenCalledWith({
+      customerName: 'Jane Doe',
+      customerAge: 34,
+      carCategoryId: '123-asdf-098',
+      numberOfDays: 3,
+    })
   })
 })
