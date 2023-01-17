@@ -3,6 +3,20 @@ import { RentCarEntity } from './rentCarEntity.js'
 
 const mocks = {
   cars: (await import('../../../mocks/cars.json')).default,
+  carsAvailables: (await import('../../../mocks/cars-availables.json')).default,
+  customer: (await import('../../../mocks/customer.json')).default,
+}
+
+const mockCarUsecase = () => {
+  class CarUsecaseStub {
+    async rent(customer, carCategory, numberOfDays) {
+      this.customer = customer
+      this.carCategory = carCategory
+      this.numberOfDays = numberOfDays
+    }
+  }
+
+  return new CarUsecaseStub()
 }
 
 const mockCarRepository = () => {
@@ -31,14 +45,21 @@ const mockCarCategoryRepository = () => {
 }
 
 describe('RentCarEntity', () => {
+  let carUsecaseStub
   let carRepositoryStub
   let carCategoryRepositoryStub
   let sut = {}
 
   beforeEach(() => {
+    carUsecaseStub = mockCarUsecase()
     carRepositoryStub = mockCarRepository()
     carCategoryRepositoryStub = mockCarCategoryRepository()
-    sut = new RentCarEntity(carCategoryRepositoryStub, carRepositoryStub)
+
+    sut = new RentCarEntity(
+      carCategoryRepositoryStub,
+      carRepositoryStub,
+      carUsecaseStub,
+    )
   })
 
   test('Should call CarCategoryRepository with correct carCategoryId', async () => {
@@ -98,5 +119,18 @@ describe('RentCarEntity', () => {
     })
 
     await expect(spy).rejects.toThrow('missing param: carRepository')
+  })
+
+  test('Should call CarUsecase with correct values', async () => {
+    const spy = jest.spyOn(carUsecaseStub, carUsecaseStub.rent.name)
+
+    await sut.rent({
+      customerName: 'Jane Doe',
+      customerAge: 34,
+      carCategoryId: '123-asdf-098',
+      numberOfDays: 3,
+    })
+
+    expect(spy).toHaveBeenCalledWith(mocks.customer, mocks.carsAvailables, 3)
   })
 })

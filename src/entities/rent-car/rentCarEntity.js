@@ -3,9 +3,10 @@ import { CarCategory } from '../base/carCategory.js'
 import { Customer } from '../base/customer.js'
 
 export class RentCarEntity {
-  constructor(carCategoryRepository, carRepository) {
+  constructor(carCategoryRepository, carRepository, carUsecase) {
     this.carCategoryRepository = carCategoryRepository
     this.carRepository = carRepository
+    this.carUsecase = carUsecase
   }
 
   async rent({ customerName, customerAge, carCategoryId, numberOfDays }) {
@@ -43,7 +44,6 @@ export class RentCarEntity {
       age: customerAge,
     })
 
-    console.log(customer)
-    console.log(availableCars)
+    await this.carUsecase.rent(customer, availableCars, numberOfDays)
   }
 }

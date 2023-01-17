@@ -1,0 +1,21 @@
+{
+  "id": "63bd42b3b88946ad152404ab",
+  "name": "Crew Cab Pickup",
+  "carIds": [
+    {
+      "_id": "778dd767-9835-4686-be52-2b8253cc6e99",
+      "name": "Taurus",
+      "releaseYear": 2022,
+      "available": true,
+      "carCategoryId": "63bd42b3b88946ad152404ab"
+    },
+    {
+      "_id": "778dd767-9835-4686-be52-123456asdf",
+      "name": "Fiat Cronos",
+      "releaseYear": 2023,
+      "available": true,
+      "carCategoryId": "63bd42b3b88946ad152404ab"
+    }
+  ],
+  "price": "150.00"
+}
