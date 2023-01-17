@@ -1,8 +1,9 @@
 import { MissingParamError } from '../../validations/errors'
 
 export class RentCarEntity {
-  constructor(carCategoryRepository) {
+  constructor(carCategoryRepository, carRepository) {
     this.carCategoryRepository = carCategoryRepository
+    this.carRepository = carRepository
   }
 
   async rent({ customerName, customerAge, carCategoryId, numberOfDays }) {
@@ -16,5 +17,6 @@ export class RentCarEntity {
     }
 
     await this.carCategoryRepository.findById({ carCategoryId })
+    await this.carRepository.find()
   }
 }
