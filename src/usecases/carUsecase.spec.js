@@ -105,6 +105,7 @@ describe('CarUsecase suite test', () => {
 
     const customer = Object.create(mocks.validCustomer)
     customer.age = 20
+    customer.name = 'Jane Doe'
 
     const numberOfDays = 5
     const today = new Date()
