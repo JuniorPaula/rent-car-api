@@ -13,7 +13,7 @@ const mocks = {
 
 const mockCarRepository = () => {
   class CarRepositoryStub {
-    async find(carId) {
+    async findById(carId) {
       const cars = mocks.cars
 
       const car = cars.find((el) => el._id === carId)
@@ -61,7 +61,7 @@ describe('CarUsecase suite test', () => {
     carCategory.carIds = [car.id]
 
     jest
-      .spyOn(carRepositoryStub, carRepositoryStub.find.name)
+      .spyOn(carRepositoryStub, carRepositoryStub.findById.name)
       .mockReturnValueOnce(car)
 
     jest.spyOn(carUsecase, carUsecase.choosenRandomCar.name)
@@ -69,7 +69,7 @@ describe('CarUsecase suite test', () => {
     const result = await carUsecase.getAvailableCar(carCategory)
 
     expect(carUsecase.choosenRandomCar).toHaveBeenCalledTimes(1)
-    expect(carRepositoryStub.find).toHaveBeenCalledWith(car.id)
+    expect(carRepositoryStub.findById).toHaveBeenCalledWith(car.id)
     expect(result).toEqual(car)
   })
 
@@ -117,7 +117,7 @@ describe('CarUsecase suite test', () => {
     jest.spyOn(now, 'getTime').mockReturnValueOnce(now)
 
     jest
-      .spyOn(carUsecase.carRepository, carUsecase.carRepository.find.name)
+      .spyOn(carUsecase.carRepository, carUsecase.carRepository.findById.name)
       .mockReturnValueOnce(car)
 
     const expectedAmount = NumberFormat.getCurrencyFormat(

@@ -12,6 +12,13 @@ export class CarRepository {
     return cars
   }
 
+  async findById(car) {
+    const carId = car._id
+    const carModel = await MongoDBProvider.getCollection('cars')
+    const result = await carModel.findOne({ _id: carId })
+    return result
+  }
+
   async #getCollectionModel() {
     const carModel = await MongoDBProvider.getCollection('cars')
     return carModel

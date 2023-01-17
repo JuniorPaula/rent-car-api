@@ -32,10 +32,9 @@ export class RentCarEntity {
     })
     const cars = await this.carRepository.find()
 
-    const carsFiltered = cars.filter(
-      (el) => el.carCategoryId === carCategory._id,
-    )
-
+    const carsFiltered = cars.filter((el) => {
+      return el.carCategoryId.toString() === carCategory._id.toString()
+    })
     const availableCars = new CarCategory({
       id: carCategory._id,
       name: carCategory.categoryName,
