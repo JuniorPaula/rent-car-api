@@ -1,13 +1,5 @@
 import { describe, test, expect } from '@jest/globals'
-import { HttpResponseStatus } from '../../utils/httpResponseStatus'
-
-class RentCarController {
-  async hanlde(httpRequest) {
-    if (!httpRequest.body.customerName) {
-      return HttpResponseStatus.badRequest('customerName')
-    }
-  }
-}
+import { RentCarController } from './rentCarController.js'
 
 describe('RentCarController', () => {
   test('Should return 400 if no customerName is provided', async () => {
