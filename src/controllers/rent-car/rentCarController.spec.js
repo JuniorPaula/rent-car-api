@@ -52,4 +52,19 @@ describe('RentCarController', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: carCategoryId')
   })
+
+  test('Should return 400 if no numberOfDays is provided', async () => {
+    const httpRequest = {
+      body: {
+        customerName: 'Jane Doe',
+        customerAge: 34,
+        carCategoryId: '123-asdf-098',
+      },
+    }
+
+    const httpResponse = await sut.hanlde(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.error.message).toBe('missing param: numberOfDays')
+  })
 })
