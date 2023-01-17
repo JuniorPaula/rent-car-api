@@ -57,9 +57,9 @@ describe('RentCarEntity', () => {
     expect(spy).toHaveBeenCalledWith({ carCategoryId: '123-asdf-098' })
   })
 
-  test('Should throw if CarRepository has no method findById', async () => {
-    class CarRepositoryStub {}
-    const fakeRepository = new CarRepositoryStub()
+  test('Should throw if CarCategoryRepository has no method findById', async () => {
+    class CarCategoryRepositoryStub {}
+    const fakeRepository = new CarCategoryRepositoryStub()
 
     const sut = new RentCarEntity(fakeRepository)
     const spy = sut.rent({
@@ -69,7 +69,7 @@ describe('RentCarEntity', () => {
       numberOfDays: 3,
     })
 
-    await expect(spy).rejects.toThrow('missing param: carRepository')
+    await expect(spy).rejects.toThrow('missing param: carCategoryRepository')
   })
 
   test('Should calls CarRepository once time', async () => {
@@ -83,5 +83,20 @@ describe('RentCarEntity', () => {
     })
 
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Should throw if CarRepository has no method find', async () => {
+    class CarRepositoryStub {}
+    const fakeRepository = new CarRepositoryStub()
+
+    const sut = new RentCarEntity(carCategoryRepositoryStub, fakeRepository)
+    const spy = sut.rent({
+      customerName: 'Jane Doe',
+      customerAge: 34,
+      carCategoryId: '123-asdf-098',
+      numberOfDays: 3,
+    })
+
+    await expect(spy).rejects.toThrow('missing param: carRepository')
   })
 })

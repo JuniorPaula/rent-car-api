@@ -13,10 +13,22 @@ export class RentCarEntity {
     this.numberOfDays = numberOfDays
 
     if (!this.carCategoryRepository.findById) {
+      throw new MissingParamError('carCategoryRepository')
+    }
+
+    if (!this.carRepository.find) {
       throw new MissingParamError('carRepository')
     }
 
-    await this.carCategoryRepository.findById({ carCategoryId })
-    await this.carRepository.find()
+    const carCategory = await this.carCategoryRepository.findById({
+      carCategoryId,
+    })
+    const cars = await this.carRepository.find()
+
+    const availableCars = cars.filter(
+      (el) => el.carCategoryId === carCategory._id,
+    )
+
+    console.log(availableCars)
   }
 }
