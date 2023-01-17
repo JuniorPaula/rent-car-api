@@ -6,30 +6,34 @@ export class RentCarController {
   }
 
   async handle(httpRequest) {
-    if (!httpRequest || !httpRequest.body) {
+    try {
+      if (!httpRequest || !httpRequest.body) {
+        return HttpResponseStatus.serverError()
+      }
+
+      const fields = [
+        'customerName',
+        'customerAge',
+        'carCategoryId',
+        'numberOfDays',
+      ]
+      for (const field of fields) {
+        if (!httpRequest.body[field]) {
+          return HttpResponseStatus.badRequest(field)
+        }
+      }
+
+      const { customerName, customerAge, carCategoryId, numberOfDays } =
+        httpRequest.body
+
+      await this.rentCarEntity.rent({
+        customerName,
+        customerAge,
+        carCategoryId,
+        numberOfDays,
+      })
+    } catch (err) {
       return HttpResponseStatus.serverError()
     }
-
-    const fields = [
-      'customerName',
-      'customerAge',
-      'carCategoryId',
-      'numberOfDays',
-    ]
-    for (const field of fields) {
-      if (!httpRequest.body[field]) {
-        return HttpResponseStatus.badRequest(field)
-      }
-    }
-
-    const { customerName, customerAge, carCategoryId, numberOfDays } =
-      httpRequest.body
-
-    await this.rentCarEntity.rent({
-      customerName,
-      customerAge,
-      carCategoryId,
-      numberOfDays,
-    })
   }
 }

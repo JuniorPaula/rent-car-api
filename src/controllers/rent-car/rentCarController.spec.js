@@ -119,4 +119,26 @@ describe('RentCarController', () => {
       numberOfDays: 3,
     })
   })
+
+  test('Should return 500 if RentCarEntity Throws', async () => {
+    const httpRequest = {
+      body: {
+        customerName: 'Jane Doe',
+        customerAge: 34,
+        carCategoryId: '123-asdf-098',
+        numberOfDays: 3,
+      },
+    }
+
+    jest
+      .spyOn(rentCarEntityStub, rentCarEntityStub.rent.name)
+      .mockImplementationOnce(() => {
+        throw new Error()
+      })
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
+  })
 })
