@@ -6,7 +6,7 @@ import {
   beforeAll,
   afterAll,
 } from '@jest/globals'
-import { MongoDBProvider } from '../providers/mongodbProvider'
+import { MongoDBProvider } from '../../providers/mongodbProvider.js'
 import { CustomerRepository } from './customerRepository.js'
 
 describe('Customer Repository', () => {

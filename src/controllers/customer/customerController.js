@@ -1,4 +1,4 @@
-import { HttpResponseStatus } from '../utils/httpResponseStatus.js'
+import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
 
 export class CustomerController {
   constructor(customerEntity) {

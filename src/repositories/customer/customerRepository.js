@@ -1,5 +1,5 @@
-import { MongoDBProvider } from '../providers/mongodbProvider.js'
-import { MissingParamError } from '../validations/errors/index.js'
+import { MongoDBProvider } from '../../providers/mongodbProvider.js'
+import { MissingParamError } from '../../validations/errors/index.js'
 
 export class CustomerRepository {
   async create({ name, age }) {
