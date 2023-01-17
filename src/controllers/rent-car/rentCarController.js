@@ -26,12 +26,14 @@ export class RentCarController {
       const { customerName, customerAge, carCategoryId, numberOfDays } =
         httpRequest.body
 
-      await this.rentCarEntity.rent({
+      const trasaction = await this.rentCarEntity.rent({
         customerName,
         customerAge,
         carCategoryId,
         numberOfDays,
       })
+
+      return HttpResponseStatus.ok(trasaction)
     } catch (err) {
       return HttpResponseStatus.serverError()
     }

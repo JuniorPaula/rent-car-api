@@ -8,6 +8,18 @@ const mockRentCarEntity = () => {
       this.customerAge = customerAge
       this.carCategoryId = carCategoryId
       this.numberOfDays = numberOfDays
+
+      return Promise.resolve({
+        customer: { age: 34, name: 'Jane Doe' },
+        car: {
+          _id: '123-asdf-098',
+          name: 'Taurus',
+          releaseYear: 2022,
+          available: true,
+        },
+        amount: 'R$ 206,80',
+        dueDate: '19 de janeiro de 2023',
+      })
     }
   }
 
@@ -140,5 +152,31 @@ describe('RentCarController', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.error.message).toBe('Internal server error')
+  })
+
+  test('Should return 200 and a transaction result if succeeds', async () => {
+    const httpRequest = {
+      body: {
+        customerName: 'Jane Doe',
+        customerAge: 34,
+        carCategoryId: '123-asdf-098',
+        numberOfDays: 3,
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      customer: { age: 34, name: 'Jane Doe' },
+      car: {
+        _id: '123-asdf-098',
+        name: 'Taurus',
+        releaseYear: 2022,
+        available: true,
+      },
+      amount: 'R$ 206,80',
+      dueDate: '19 de janeiro de 2023',
+    })
   })
 })
