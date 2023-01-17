@@ -2,7 +2,7 @@ import { HttpResponseStatus } from '../../utils/httpResponseStatus'
 
 export class RentCarController {
   async handle(httpRequest) {
-    if (!httpRequest) {
+    if (!httpRequest || !httpRequest.body) {
       return HttpResponseStatus.serverError()
     }
 
