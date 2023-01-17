@@ -133,4 +133,24 @@ describe('RentCarEntity', () => {
 
     expect(spy).toHaveBeenCalledWith(mocks.customer, mocks.carsAvailables, 3)
   })
+
+  test('Should throw if CarUsecase has no method rent', async () => {
+    class CarUsecaseStub {}
+    const fakeCarUsecase = new CarUsecaseStub()
+
+    const sut = new RentCarEntity(
+      carCategoryRepositoryStub,
+      carRepositoryStub,
+      fakeCarUsecase,
+    )
+
+    const spy = sut.rent({
+      customerName: 'Jane Doe',
+      customerAge: 34,
+      carCategoryId: '123-asdf-098',
+      numberOfDays: 3,
+    })
+
+    await expect(spy).rejects.toThrow('missing param: carUsecase')
+  })
 })

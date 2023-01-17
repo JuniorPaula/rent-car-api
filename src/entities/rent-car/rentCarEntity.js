@@ -23,6 +23,10 @@ export class RentCarEntity {
       throw new MissingParamError('carRepository')
     }
 
+    if (!this.carUsecase.rent) {
+      throw new MissingParamError('carUsecase')
+    }
+
     const carCategory = await this.carCategoryRepository.findById({
       carCategoryId,
     })
