@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import carCategoryRoutes from './carCategoryRoutes.js'
 import carRoutes from './carRoutes.js'
+import rentCarRoutes from './rentCarRoutes.js'
 
 export const setupRoutes = (app) => {
   const router = Router()
@@ -8,4 +9,5 @@ export const setupRoutes = (app) => {
 
   carCategoryRoutes(router)
   carRoutes(router)
+  rentCarRoutes(router)
 }
