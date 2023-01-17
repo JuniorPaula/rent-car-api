@@ -48,6 +48,12 @@ export class RentCarEntity {
       age: customerAge,
     })
 
-    await this.carUsecase.rent(customer, availableCars, numberOfDays)
+    const transaction = await this.carUsecase.rent(
+      customer,
+      availableCars,
+      numberOfDays,
+    )
+
+    return transaction
   }
 }

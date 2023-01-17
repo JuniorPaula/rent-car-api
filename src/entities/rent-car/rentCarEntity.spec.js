@@ -1,7 +1,9 @@
 import { describe, test, beforeEach, expect, jest } from '@jest/globals'
+import { Transaction } from '../transaction.js'
 import { RentCarEntity } from './rentCarEntity.js'
 
 const mocks = {
+  validCar: (await import('../../../mocks/valid-car.json')).default,
   cars: (await import('../../../mocks/cars.json')).default,
   carsAvailables: (await import('../../../mocks/cars-availables.json')).default,
   customer: (await import('../../../mocks/customer.json')).default,
@@ -13,6 +15,17 @@ const mockCarUsecase = () => {
       this.customer = customer
       this.carCategory = carCategory
       this.numberOfDays = numberOfDays
+
+      const expectedAmount = 'R$ 206,80'
+
+      const transaction = new Transaction({
+        customer: mocks.customer,
+        car: mocks.validCar,
+        dueDate: '22 de janeiro de 2023',
+        amount: expectedAmount,
+      })
+
+      return transaction
     }
   }
 
@@ -152,5 +165,21 @@ describe('RentCarEntity', () => {
     })
 
     await expect(spy).rejects.toThrow('missing param: carUsecase')
+  })
+
+  test('Should a transaction when CarUsecase succeeds', async () => {
+    const transaction = await sut.rent({
+      customerName: 'Jane Doe',
+      customerAge: 34,
+      carCategoryId: '123-asdf-098',
+      numberOfDays: 3,
+    })
+
+    expect(transaction).toEqual({
+      customer: mocks.customer,
+      car: mocks.validCar,
+      dueDate: '22 de janeiro de 2023',
+      amount: 'R$ 206,80',
+    })
   })
 })
