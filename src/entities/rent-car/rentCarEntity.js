@@ -1,4 +1,6 @@
-import { MissingParamError } from '../../validations/errors'
+import { MissingParamError } from '../../validations/errors/index.js'
+import { CarCategory } from '../base/carCategory.js'
+import { Customer } from '../base/customer.js'
 
 export class RentCarEntity {
   constructor(carCategoryRepository, carRepository) {
@@ -25,10 +27,23 @@ export class RentCarEntity {
     })
     const cars = await this.carRepository.find()
 
-    const availableCars = cars.filter(
+    const carsFiltered = cars.filter(
       (el) => el.carCategoryId === carCategory._id,
     )
 
+    const availableCars = new CarCategory({
+      id: carCategory._id,
+      name: carCategory.categoryName,
+      carIds: carsFiltered,
+      price: carCategory.price,
+    })
+
+    const customer = new Customer({
+      name: customerName,
+      age: customerAge,
+    })
+
+    console.log(customer)
     console.log(availableCars)
   }
 }
