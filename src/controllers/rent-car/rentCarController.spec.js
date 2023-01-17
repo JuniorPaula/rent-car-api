@@ -17,7 +17,7 @@ describe('RentCarController', () => {
       },
     }
 
-    const httpResponse = await sut.hanlde(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: customerName')
@@ -32,7 +32,7 @@ describe('RentCarController', () => {
       },
     }
 
-    const httpResponse = await sut.hanlde(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: customerAge')
@@ -47,7 +47,7 @@ describe('RentCarController', () => {
       },
     }
 
-    const httpResponse = await sut.hanlde(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: carCategoryId')
@@ -62,9 +62,16 @@ describe('RentCarController', () => {
       },
     }
 
-    const httpResponse = await sut.hanlde(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.error.message).toBe('missing param: numberOfDays')
+  })
+
+  test('Should return 500 if no httpRequest is provided', async () => {
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.error.message).toBe('Internal server error')
   })
 })

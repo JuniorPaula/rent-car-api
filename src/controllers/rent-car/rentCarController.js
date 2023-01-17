@@ -1,7 +1,11 @@
 import { HttpResponseStatus } from '../../utils/httpResponseStatus'
 
 export class RentCarController {
-  async hanlde(httpRequest) {
+  async handle(httpRequest) {
+    if (!httpRequest) {
+      return HttpResponseStatus.serverError()
+    }
+
     const fields = [
       'customerName',
       'customerAge',
