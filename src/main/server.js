@@ -3,6 +3,8 @@ import { MongoDBProvider } from '../providers/mongodbProvider.js'
 import { logger } from '../providers/pinoProvider.js'
 import app from './app.js'
 
+import('./gracefulShutdown.js')
+
 dotenv.config()
 MongoDBProvider.connect(process.env.MONGODB_URL)
   .then(() => logger.info('database connected'))
