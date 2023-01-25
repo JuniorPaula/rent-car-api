@@ -1,3 +1,4 @@
+import { logger } from '../../providers/pinoProvider.js'
 import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
 
 export class UpdateCarCategoryController {
@@ -21,6 +22,7 @@ export class UpdateCarCategoryController {
       })
       return HttpResponseStatus.ok(carCategory)
     } catch (err) {
+      logger.error('[error: update car]', err)
       return HttpResponseStatus.serverError()
     }
   }

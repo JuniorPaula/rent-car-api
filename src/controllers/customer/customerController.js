@@ -1,3 +1,4 @@
+import { logger } from '../../providers/pinoProvider.js'
 import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
 
 export class CustomerController {
@@ -23,6 +24,7 @@ export class CustomerController {
 
       return HttpResponseStatus.created()
     } catch (err) {
+      logger.error('[error: create customer]', err)
       return HttpResponseStatus.serverError()
     }
   }

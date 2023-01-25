@@ -20,6 +20,12 @@ class PinoProvider {
       this.parseLoggerInputToPinoFormat({ message, loggerData }),
     )
   }
+
+  error(message, loggerData) {
+    this.pinoLogger.error(
+      this.parseLoggerInputToPinoFormat({ message, loggerData }),
+    )
+  }
 }
 
 export const logger = new PinoProvider()

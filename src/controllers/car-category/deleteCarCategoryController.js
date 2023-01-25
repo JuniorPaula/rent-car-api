@@ -1,3 +1,4 @@
+import { logger } from '../../providers/pinoProvider.js'
 import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
 
 export class DeleteCarCategoryController {
@@ -16,6 +17,7 @@ export class DeleteCarCategoryController {
 
       return HttpResponseStatus.noContent()
     } catch (err) {
+      logger.error('[error: delete car category]', err)
       return HttpResponseStatus.serverError()
     }
   }

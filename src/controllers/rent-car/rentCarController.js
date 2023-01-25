@@ -1,4 +1,5 @@
 import { HttpResponseStatus } from '../../utils/httpResponseStatus.js'
+import { logger } from '../../providers/pinoProvider.js'
 
 export class RentCarController {
   constructor(rentCarEntity) {
@@ -35,6 +36,7 @@ export class RentCarController {
 
       return HttpResponseStatus.ok(trasaction)
     } catch (err) {
+      logger.error('[error: rent a car]', err)
       return HttpResponseStatus.serverError()
     }
   }
