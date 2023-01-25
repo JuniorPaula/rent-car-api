@@ -1,6 +1,7 @@
 import { Tax } from '../entities/tax.js'
 import { NumberFormat } from '../utils/numberFormat.js'
 import { Transaction } from '../entities/transaction.js'
+import { logger } from '../providers/pinoProvider.js'
 
 export class CarUsecase {
   constructor(carRepository) {
@@ -58,6 +59,9 @@ export class CarUsecase {
       dueDate,
       car,
       amount: finalPrice,
+    })
+    logger.info('Transaction succeeds', {
+      payload: transaction,
     })
 
     return transaction
