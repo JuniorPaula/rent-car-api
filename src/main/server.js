@@ -4,6 +4,7 @@ import { logger } from '../providers/pinoProvider.js'
 import app from './app.js'
 
 import('./gracefulShutdown.js')
+import('./uncaughtExceptions.js')
 
 dotenv.config()
 MongoDBProvider.connect(process.env.MONGODB_URL)
@@ -13,11 +14,3 @@ MongoDBProvider.connect(process.env.MONGODB_URL)
 app.listen(process.env.PORT, () =>
   logger.info(`server is running at port ${process.env.PORT}`),
 )
-
-process.on('uncaughtException', (error, origin) => {
-  logger.error(`${origin} signal received. ${error}`)
-})
-
-process.on('unhandledRejection', (error) => {
-  logger.error(`unhandledRejection signal received. ${error}`)
-})
