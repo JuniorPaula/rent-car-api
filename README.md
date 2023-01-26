@@ -59,6 +59,13 @@ npm run test:integration
 npm run test:ci
 ~~~
 
+#### Run load tests
+
+~~~javascript
+npm run autocannon
+~~~
+
+
 ## Main features
 - Transaction of rent a car
 - Create car category
