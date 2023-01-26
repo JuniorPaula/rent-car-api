@@ -5,14 +5,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node ./src/main/server.js",
+    "dev": "node ./src/main/index.js",
     "seed": "node ./seed",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --passWithNoTests",
     "test:unit": "npm test -- -c jest-unit-config.js",
     "test:integration": "npm test -- -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "autocannon": "npx autocannon -c 500 -d 30 --workers 10 --renderStatusCodes --latency --warmup [ -c 1 -d 2 ] localhost:3037"
   },
   "keywords": [],
   "author": "JuniorPaula",
@@ -30,6 +31,7 @@
     "supertest": "^6.3.3"
   },
   "dependencies": {
+    "autocannon": "^7.10.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongodb": "^4.13.0",
